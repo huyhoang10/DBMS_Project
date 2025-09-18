@@ -1,5 +1,5 @@
 ﻿using Final_Project_DBMS.Controller;
-using Final_Project_DBMS.Dao;
+using Final_Project_DBMS.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace Final_Project_DBMS.View
 {
     public partial class UCWarehouse : UserControl
     {
-        ProductController productController = new ProductController();
+        WarehouseController warehouseController = new WarehouseController();
         public UCWarehouse()
         {
             InitializeComponent();
@@ -22,30 +22,37 @@ namespace Final_Project_DBMS.View
 
         private void UCWarehouse_Load(object sender, EventArgs e)
         {
-            LoadDgvProduct();
+            LoadDgvWarehouse();
         }
 
-        private void LoadDgvProduct()
+        private void LoadDgvWarehouse()
         {
-            dgvProduct.AutoGenerateColumns = false;
-            dgvProduct.DataSource = productController.GetAllProduct();
+            dgvWarehouse.DataSource = warehouseController.GetAllWarehouse();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            FProduct fProduct = new FProduct();
-            fProduct.ShowDialog();
+            
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
-            FProduct fProduct = new FProduct();
-            fProduct.ShowDialog();
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            dgvProduct.DataSource = productController.FindProductByName(txtSearch.Text);
+            Warehouse warehouse = new Warehouse();
+            if(txtId.Text == "")
+            {
+                warehouse.Name = txtName.Text;
+                warehouse.Address = txtAddress.Text;
+                warehouseController.InsertWarehouse(warehouse);
+                LoadDgvWarehouse();
+            }
+            else
+            {
+                warehouse.Id = int.Parse(txtId.Text);
+                warehouse.Name = txtName.Text;
+                warehouse.Address = txtAddress.Text;
+                warehouseController.UpdateWarehouse(warehouse);
+                LoadDgvWarehouse();
+            }
         }
     }
 }

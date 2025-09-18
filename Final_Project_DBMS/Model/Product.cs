@@ -17,8 +17,6 @@ namespace Final_Project_DBMS.Model
         private string material;
         private string size;
         private string unit;
-        private string status;
-        private string location;
         private string description;
 
         public int Id
@@ -60,17 +58,6 @@ namespace Final_Project_DBMS.Model
         {
             get { return unit; }
             set { unit = value; }
-        }
-        public string Status
-        {
-            get { return status; }
-            set { status = value; }
-        }
-        public string Location
-        {
-            get { return location; }
-            set { location = value; }
-
         }
         public string Description
         {

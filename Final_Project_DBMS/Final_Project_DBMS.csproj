@@ -56,15 +56,18 @@
     <Compile Include="Controller\ProductController.cs" />
     <Compile Include="Controller\SupplierController.cs" />
     <Compile Include="Controller\UserController.cs" />
+    <Compile Include="Controller\WarehouseController.cs" />
     <Compile Include="Dao\AttributeDao.cs" />
     <Compile Include="Dao\DBConnect.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\SupplierDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
+    <Compile Include="Dao\WarehouseDao.cs" />
     <Compile Include="Model\Attributes.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Warehouse.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\MethodStatic.cs" />
     <Compile Include="View\FAttributes.cs">
@@ -105,6 +108,12 @@
     <Compile Include="View\UCHistory.Designer.cs">
       <DependentUpon>UCHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\UCProduct.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\UCProduct.Designer.cs">
+      <DependentUpon>UCProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\UCStocking.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -116,6 +125,12 @@
     </Compile>
     <Compile Include="View\UCSupplier.Designer.cs">
       <DependentUpon>UCSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\UCInventory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\UCInventory.Designer.cs">
+      <DependentUpon>UCInventory.cs</DependentUpon>
     </Compile>
     <Compile Include="View\UCWarehouse.cs">
       <SubType>UserControl</SubType>
@@ -150,11 +165,17 @@
     <EmbeddedResource Include="View\UCHistory.resx">
       <DependentUpon>UCHistory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\UCProduct.resx">
+      <DependentUpon>UCProduct.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\UCStocking.resx">
       <DependentUpon>UCStocking.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\UCSupplier.resx">
       <DependentUpon>UCSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UCInventory.resx">
+      <DependentUpon>UCInventory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\UCWarehouse.resx">
       <DependentUpon>UCWarehouse.cs</DependentUpon>

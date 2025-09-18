@@ -19,5 +19,19 @@ namespace Final_Project_DBMS.Controller
         {
             return productDao.FindProductByName(keyword);
         }
+
+        public Product GetProductById(int id)
+        {
+            return productDao.GetProductById(id);
+        }
+
+        public void InsertProduct(Product product)
+        {
+            productDao.InsertProduct(product);
+        }
+        public void UpdateProduct(Product product)
+        {
+            productDao.UpdateProduct(product);
+        }
     }
 }

@@ -44,35 +44,44 @@ namespace Final_Project_DBMS
             ucExpectedGoodsRecieve1.BringToFront();
         }
 
-        private void btnWarehouse_Click(object sender, EventArgs e)
-        {
-            ChooseBtn(btnWarehouse);
-            ucWarehouse1.BringToFront();
-        }
-
-        private void ucWarehouse1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void FManagement_Load(object sender, EventArgs e)
         {
-            ChooseBtn(btnWarehouse);
+            ChooseBtn(btnInventory);
         }
 
 
         private void ChooseBtn(Guna2Button btn)
         {
-            btnWarehouse.FillColor = Color.FromArgb(107, 98, 89);
+            btnInventory.FillColor = Color.FromArgb(107, 98, 89);
             btnExpectOrder.FillColor = Color.FromArgb(107, 98, 89);
             btnSupplier.FillColor = Color.FromArgb(107, 98, 89);
             btnStocking.FillColor = Color.FromArgb(107, 98, 89);
             btnHistory.FillColor = Color.FromArgb(107, 98, 89);
+            btnWarehouse.FillColor = Color.FromArgb(107, 98, 89);
+            btnProduct.FillColor = Color.FromArgb(107, 98, 89);
             btn.FillColor = Color.DarkRed;
 
         }
 
-        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        private void btnWarehouse_Click(object sender, EventArgs e)
+        {
+            ucWarehouse1.BringToFront();
+            ChooseBtn(btnWarehouse);
+        }
+
+        private void btnProduct_Click(object sender, EventArgs e)
+        {
+            ucProduct1.BringToFront();
+            ChooseBtn(btnProduct);
+        }
+
+        private void btnInventory_Click(object sender, EventArgs e)
+        {
+            ucInventory1.BringToFront();
+            ChooseBtn(btnInventory);
+        }
+
+        private void ucProduct1_Load(object sender, EventArgs e)
         {
 
         }
