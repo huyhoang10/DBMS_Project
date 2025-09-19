@@ -20,7 +20,7 @@ namespace Final_Project_DBMS.View
             InitializeComponent();
         }
 
-        private void UCSupplier_Load(object sender, EventArgs e)
+        public void UCSupplier_Load(object sender, EventArgs e)
         {
             ReadOnlyTxt();
             btnSave.Enabled = false;

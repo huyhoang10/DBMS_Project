@@ -20,7 +20,7 @@ namespace Final_Project_DBMS.View
             InitializeComponent();
         }
 
-        private void UCProduct_Load(object sender, EventArgs e)
+        public void UCProduct_Load(object sender, EventArgs e)
         {
             btnEdit.Enabled = false;
             LoadDgvProduct();

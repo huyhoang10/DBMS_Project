@@ -20,7 +20,7 @@ namespace Final_Project_DBMS.View
             InitializeComponent();
         }
 
-        private void UCWarehouse_Load(object sender, EventArgs e)
+        public void UCWarehouse_Load(object sender, EventArgs e)
         {
             LoadDgvWarehouse();
         }

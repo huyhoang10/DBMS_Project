@@ -16,24 +16,23 @@ namespace Final_Project_DBMS.View
 {
     public partial class UCInventory : UserControl
     {
-        ProductController productController = new ProductController();
+        InventoryController inventoryController = new InventoryController();
         WarehouseController warehouseController = new WarehouseController();
         public UCInventory()
         {
             InitializeComponent();
         }
 
-        private void UCWarehouse_Load(object sender, EventArgs e)
+        public void UCWarehouse_Load(object sender, EventArgs e)
         {
-            btnEdit.Enabled = false;
-            LoadDgvProduct();
             LoadCmbWarehouse();
+            LoadDgvInventory();          
         }
 
-        private void LoadDgvProduct()
+        private void LoadDgvInventory()
         {
-            dgvProduct.AutoGenerateColumns = false;
-            dgvProduct.DataSource = productController.GetAllProduct();
+            dgvInventory.AutoGenerateColumns = false;
+            dgvInventory.DataSource = inventoryController.GetInventoryByWarehouse(cmbWarehouse.Text);
             
         }
 
@@ -54,17 +53,7 @@ namespace Final_Project_DBMS.View
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            dgvProduct.DataSource = productController.FindProductByName(txtSearch.Text);
-        }
-
-        private void dgvProduct_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if(e.ColumnIndex>=0 && e.RowIndex >= 0)
-            {
-                int id = Int32.Parse(dgvProduct.CurrentRow.Cells[0].Value.ToString());
-                Constants.choosedProduct = productController.GetProductById(id);
-            }
-            btnEdit.Enabled = true;
+            dgvInventory.DataSource = inventoryController.FindProductInventory(txtSearch.Text,cmbWarehouse.Text);
         }
 
         private void LoadCmbWarehouse()
@@ -75,6 +64,12 @@ namespace Final_Project_DBMS.View
             {
                 cmbWarehouse.Items.Add(item.Name);
             }
+            cmbWarehouse.SelectedIndex = 0;
+        }
+
+        private void cmbWarehouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadDgvInventory();
         }
     }
 }

@@ -324,6 +324,7 @@
             this.Controls.Add(this.guna2HtmlLabel1);
             this.Name = "UCExpectedGoodsRecieve";
             this.Size = new System.Drawing.Size(1500, 1000);
+            this.Load += new System.EventHandler(this.UCExpectedGoodsRecieve_Load);
             this.grbWaitingProcess.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvWaitingProcess)).EndInit();
             this.grbDetail.ResumeLayout(false);

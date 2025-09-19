@@ -77,11 +77,18 @@ namespace Final_Project_DBMS
 
         private void btnInventory_Click(object sender, EventArgs e)
         {
+            ucInventory1.UCWarehouse_Load(sender, e);
             ucInventory1.BringToFront();
             ChooseBtn(btnInventory);
+            
         }
 
         private void ucProduct1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ucInventory1_Load(object sender, EventArgs e)
         {
 
         }

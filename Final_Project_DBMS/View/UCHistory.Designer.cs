@@ -78,13 +78,13 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvDetail.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvDetail.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
-            this.dgvDetail.Location = new System.Drawing.Point(20, 156);
-            this.dgvDetail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvDetail.Location = new System.Drawing.Point(27, 192);
+            this.dgvDetail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvDetail.Name = "dgvDetail";
             this.dgvDetail.RowHeadersVisible = false;
             this.dgvDetail.RowHeadersWidth = 51;
             this.dgvDetail.RowTemplate.Height = 24;
-            this.dgvDetail.Size = new System.Drawing.Size(548, 400);
+            this.dgvDetail.Size = new System.Drawing.Size(731, 492);
             this.dgvDetail.TabIndex = 1;
             this.dgvDetail.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvDetail.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -112,8 +112,8 @@
             // 
             this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2HtmlLabel1.Location = new System.Drawing.Point(38, 41);
-            this.guna2HtmlLabel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(51, 50);
+            this.guna2HtmlLabel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
             this.guna2HtmlLabel1.Size = new System.Drawing.Size(452, 60);
             this.guna2HtmlLabel1.TabIndex = 3;
@@ -129,10 +129,10 @@
             this.grbDetail.Controls.Add(this.dgvDetail);
             this.grbDetail.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbDetail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.grbDetail.Location = new System.Drawing.Point(488, 154);
-            this.grbDetail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grbDetail.Location = new System.Drawing.Point(651, 190);
+            this.grbDetail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grbDetail.Name = "grbDetail";
-            this.grbDetail.Size = new System.Drawing.Size(586, 569);
+            this.grbDetail.Size = new System.Drawing.Size(781, 700);
             this.grbDetail.TabIndex = 4;
             this.grbDetail.Text = "Chi tiết";
             this.grbDetail.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -149,13 +149,13 @@
             this.txtDescription.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtDescription.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDescription.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtDescription.Location = new System.Drawing.Point(216, 103);
-            this.txtDescription.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtDescription.Location = new System.Drawing.Point(288, 127);
+            this.txtDescription.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtDescription.PlaceholderText = "Mô tả";
             this.txtDescription.SelectedText = "";
-            this.txtDescription.Size = new System.Drawing.Size(351, 39);
+            this.txtDescription.Size = new System.Drawing.Size(468, 48);
             this.txtDescription.TabIndex = 21;
             // 
             // txtStatus
@@ -170,13 +170,13 @@
             this.txtStatus.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtStatus.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtStatus.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtStatus.Location = new System.Drawing.Point(20, 103);
-            this.txtStatus.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtStatus.Location = new System.Drawing.Point(27, 127);
+            this.txtStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtStatus.PlaceholderText = "Trạng thái";
             this.txtStatus.SelectedText = "";
-            this.txtStatus.Size = new System.Drawing.Size(172, 39);
+            this.txtStatus.Size = new System.Drawing.Size(229, 48);
             this.txtStatus.TabIndex = 20;
             // 
             // txtStaff
@@ -191,13 +191,13 @@
             this.txtStaff.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtStaff.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtStaff.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtStaff.Location = new System.Drawing.Point(216, 49);
-            this.txtStaff.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtStaff.Location = new System.Drawing.Point(288, 60);
+            this.txtStaff.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtStaff.Name = "txtStaff";
             this.txtStaff.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtStaff.PlaceholderText = "Nhân viên xử lý";
             this.txtStaff.SelectedText = "";
-            this.txtStaff.Size = new System.Drawing.Size(185, 39);
+            this.txtStaff.Size = new System.Drawing.Size(247, 48);
             this.txtStaff.TabIndex = 19;
             // 
             // txtId
@@ -212,13 +212,13 @@
             this.txtId.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtId.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtId.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtId.Location = new System.Drawing.Point(20, 49);
-            this.txtId.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtId.Location = new System.Drawing.Point(27, 60);
+            this.txtId.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtId.Name = "txtId";
             this.txtId.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtId.PlaceholderText = "ID";
             this.txtId.SelectedText = "";
-            this.txtId.Size = new System.Drawing.Size(172, 39);
+            this.txtId.Size = new System.Drawing.Size(229, 48);
             this.txtId.TabIndex = 18;
             // 
             // dtpDate
@@ -228,12 +228,12 @@
             this.dtpDate.FillColor = System.Drawing.Color.White;
             this.dtpDate.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDate.Location = new System.Drawing.Point(425, 49);
-            this.dtpDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtpDate.Location = new System.Drawing.Point(567, 60);
+            this.dtpDate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dtpDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.dtpDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(142, 39);
+            this.dtpDate.Size = new System.Drawing.Size(189, 48);
             this.dtpDate.TabIndex = 17;
             this.dtpDate.Value = new System.DateTime(2025, 9, 13, 15, 38, 46, 554);
             // 
@@ -242,10 +242,10 @@
             this.grbLog.Controls.Add(this.dgvSupplier);
             this.grbLog.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.grbLog.Location = new System.Drawing.Point(38, 154);
-            this.grbLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grbLog.Location = new System.Drawing.Point(51, 190);
+            this.grbLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grbLog.Name = "grbLog";
-            this.grbLog.Size = new System.Drawing.Size(415, 569);
+            this.grbLog.Size = new System.Drawing.Size(553, 700);
             this.grbLog.TabIndex = 22;
             this.grbLog.Text = "Chi tiết";
             this.grbLog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -278,8 +278,8 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvSupplier.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvSupplier.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.dgvSupplier.Location = new System.Drawing.Point(14, 49);
-            this.dgvSupplier.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvSupplier.Location = new System.Drawing.Point(19, 60);
+            this.dgvSupplier.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvSupplier.Name = "dgvSupplier";
             this.dgvSupplier.ReadOnly = true;
             this.dgvSupplier.RowHeadersVisible = false;
@@ -287,7 +287,7 @@
             dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.dgvSupplier.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvSupplier.RowTemplate.Height = 30;
-            this.dgvSupplier.Size = new System.Drawing.Size(384, 492);
+            this.dgvSupplier.Size = new System.Drawing.Size(512, 606);
             this.dgvSupplier.TabIndex = 18;
             this.dgvSupplier.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvSupplier.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -337,14 +337,15 @@
             // 
             // UCHistory
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.grbLog);
             this.Controls.Add(this.grbDetail);
             this.Controls.Add(this.guna2HtmlLabel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCHistory";
-            this.Size = new System.Drawing.Size(1125, 812);
+            this.Size = new System.Drawing.Size(1500, 999);
+            this.Load += new System.EventHandler(this.UCHistory_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
             this.grbDetail.ResumeLayout(false);
             this.grbLog.ResumeLayout(false);

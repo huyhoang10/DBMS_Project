@@ -81,13 +81,24 @@ drop table SanPham
 
 drop table TonKho
 CREATE TABLE TonKho (
-    ma_sanpham int,
+    ma_sp int,
     ma_kho int,
-    so_luong INT DEFAULT 0,
-    PRIMARY KEY(ma_sanpham, ma_kho),
-    FOREIGN KEY(ma_sanpham) REFERENCES SanPham(ma_sp),
-    FOREIGN KEY(ma_kho) REFERENCES Kho(ma)
+    soluong INT DEFAULT 0,
+	ma_tt int,
+    PRIMARY KEY(ma_sp, ma_kho),
+    FOREIGN KEY(ma_sp) REFERENCES SanPham(ma_sp),
+    FOREIGN KEY(ma_kho) REFERENCES Kho(ma),
+	FOREIGN KEY(ma_tt) REFERENCES TrangThai(ma)
 );
+
+INSERT INTO TonKho (ma_sp, ma_kho, soluong, ma_tt)
+VALUES
+(1, 1, 50, 1),   -- Sản phẩm 1 trong kho 1, 50 cái, trạng thái 1
+(2, 1, 30, 1),   -- Sản phẩm 2 trong kho 1, 30 cái
+(3, 1, 20, 2),   -- Sản phẩm 3 trong kho 2, trạng thái 2
+(4, 1, 10, 1),   -- Sản phẩm 4 trong kho 3
+(5, 1, 0, 2);    -- Sản phẩm 5 trong kho 2, hết hàng
+
 
 drop table SanPham,ThuongHieu, PhanLoai, MauSac, ChatLieu, DonViTinh, TrangThai
 
@@ -112,6 +123,32 @@ LEFT JOIN MauSac ms       ON sp.ma_mau = ms.ma
 LEFT JOIN ChatLieu cl     ON sp.ma_chatlieu = cl.ma
 LEFT JOIN DonViTinh dvt   ON sp.ma_dvt = dvt.ma
 go
+
+drop view v_TonKho_Chitiet
+
+create view v_TonKho_Chitiet
+as
+select
+k.ten as tenkho,
+sp.ma_sp,
+sp.ten_sp,
+th.ten as thuonghieu,
+dvt.ten as dvt,
+tt.ten as trangthai,
+tk.soluong
+from
+TonKho tk
+left join SanPham sp on sp.ma_sp = tk.ma_sp
+left join Kho k on k.ma = tk.ma_kho
+left join ThuongHieu th on th.ma = sp.ma_th
+left join DonViTinh dvt on dvt.ma = sp.ma_dvt
+left join TrangThai tt on tt.ma = tk.ma_tt
+go
+
+drop view v_TonKho_Chitiet
+
+select * from v_TonKho_Chitiet
+
 
 drop view v_SanPham_Chitiet
 select * from v_SanPham_Chitiet
@@ -281,7 +318,6 @@ BEGIN
     WHERE ma_sp = @ma_sp;
 END
 GO
-
 --===== CREATE FUNC =====
 create function fn_LayKho()
 returns table
@@ -327,8 +363,23 @@ begin
 end
 go
 
+create function fn_LaySPTheoKho(@tenkho nvarchar(50))
+returns table
+as
+	return (Select * from v_TonKho_Chitiet where tenkho = @tenkho)
+go
 
+drop function fn_LaySPTheoKho
 
+create function fn_TimSPTrongTonKho(@tensp nvarchar(50),@tenkho nvarchar(50))
+returns table
+as
+	return (select * from v_TonKho_Chitiet where ten_sp like '%'+@tensp+'%' and tenkho = @tenkho )
+go
+
+drop function fn_TimSPTrongTonKho
+
+Select * from dbo.fn_LaySPTheoKho(N'A2')
 
 
 -- Bảng PhanLoai

@@ -16,5 +16,10 @@ namespace Final_Project_DBMS.View
         {
             InitializeComponent();
         }
+
+        public void UCStocking_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

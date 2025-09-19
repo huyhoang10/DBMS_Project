@@ -39,9 +39,9 @@
             this.btnSupplier = new Guna.UI2.WinForms.Guna2Button();
             this.btnInventory = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.ucInventory1 = new Final_Project_DBMS.View.UCInventory();
             this.ucProduct1 = new Final_Project_DBMS.View.UCProduct();
             this.ucWarehouse1 = new Final_Project_DBMS.View.UCWarehouse();
-            this.ucInventory1 = new Final_Project_DBMS.View.UCInventory();
             this.ucSupplier1 = new Final_Project_DBMS.View.UCSupplier();
             this.ucExpectedGoodsRecieve1 = new Final_Project_DBMS.View.UCExpectedGoodsRecieve();
             this.ucStocking1 = new Final_Project_DBMS.View.UCStocking();
@@ -79,7 +79,7 @@
             this.btnProduct.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnProduct.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProduct.ForeColor = System.Drawing.Color.White;
-            this.btnProduct.Location = new System.Drawing.Point(0, 716);
+            this.btnProduct.Location = new System.Drawing.Point(0, 366);
             this.btnProduct.Name = "btnProduct";
             this.btnProduct.Size = new System.Drawing.Size(300, 60);
             this.btnProduct.TabIndex = 8;
@@ -95,7 +95,7 @@
             this.btnWarehouse.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnWarehouse.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnWarehouse.ForeColor = System.Drawing.Color.White;
-            this.btnWarehouse.Location = new System.Drawing.Point(0, 650);
+            this.btnWarehouse.Location = new System.Drawing.Point(0, 432);
             this.btnWarehouse.Name = "btnWarehouse";
             this.btnWarehouse.Size = new System.Drawing.Size(300, 60);
             this.btnWarehouse.TabIndex = 7;
@@ -125,7 +125,7 @@
             this.btnExpectOrder.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnExpectOrder.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExpectOrder.ForeColor = System.Drawing.Color.White;
-            this.btnExpectOrder.Location = new System.Drawing.Point(0, 442);
+            this.btnExpectOrder.Location = new System.Drawing.Point(0, 564);
             this.btnExpectOrder.Name = "btnExpectOrder";
             this.btnExpectOrder.Size = new System.Drawing.Size(300, 60);
             this.btnExpectOrder.TabIndex = 5;
@@ -156,7 +156,7 @@
             this.btnHistory.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnHistory.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHistory.ForeColor = System.Drawing.Color.White;
-            this.btnHistory.Location = new System.Drawing.Point(0, 584);
+            this.btnHistory.Location = new System.Drawing.Point(0, 696);
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Size = new System.Drawing.Size(300, 60);
             this.btnHistory.TabIndex = 3;
@@ -172,7 +172,7 @@
             this.btnStocking.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnStocking.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStocking.ForeColor = System.Drawing.Color.White;
-            this.btnStocking.Location = new System.Drawing.Point(0, 513);
+            this.btnStocking.Location = new System.Drawing.Point(0, 630);
             this.btnStocking.Name = "btnStocking";
             this.btnStocking.Size = new System.Drawing.Size(300, 60);
             this.btnStocking.TabIndex = 2;
@@ -188,7 +188,7 @@
             this.btnSupplier.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnSupplier.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSupplier.ForeColor = System.Drawing.Color.White;
-            this.btnSupplier.Location = new System.Drawing.Point(0, 371);
+            this.btnSupplier.Location = new System.Drawing.Point(0, 498);
             this.btnSupplier.Name = "btnSupplier";
             this.btnSupplier.Size = new System.Drawing.Size(300, 60);
             this.btnSupplier.TabIndex = 1;
@@ -229,6 +229,16 @@
             this.guna2Panel2.Size = new System.Drawing.Size(1500, 1200);
             this.guna2Panel2.TabIndex = 1;
             // 
+            // ucInventory1
+            // 
+            this.ucInventory1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ucInventory1.Location = new System.Drawing.Point(0, 0);
+            this.ucInventory1.MaximumSize = new System.Drawing.Size(1700, 1000);
+            this.ucInventory1.Name = "ucInventory1";
+            this.ucInventory1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucInventory1.TabIndex = 5;
+            this.ucInventory1.Load += new System.EventHandler(this.ucInventory1_Load);
+            // 
             // ucProduct1
             // 
             this.ucProduct1.Location = new System.Drawing.Point(0, 0);
@@ -245,15 +255,6 @@
             this.ucWarehouse1.Name = "ucWarehouse1";
             this.ucWarehouse1.Size = new System.Drawing.Size(1500, 1000);
             this.ucWarehouse1.TabIndex = 6;
-            // 
-            // ucInventory1
-            // 
-            this.ucInventory1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ucInventory1.Location = new System.Drawing.Point(0, 0);
-            this.ucInventory1.MaximumSize = new System.Drawing.Size(1700, 1000);
-            this.ucInventory1.Name = "ucInventory1";
-            this.ucInventory1.Size = new System.Drawing.Size(1500, 1000);
-            this.ucInventory1.TabIndex = 5;
             // 
             // ucSupplier1
             // 
