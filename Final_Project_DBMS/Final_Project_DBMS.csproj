@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Controller\AttributesController.cs" />
     <Compile Include="Controller\InventoryController.cs" />
+    <Compile Include="Controller\OrderController.cs" />
     <Compile Include="Controller\ProductController.cs" />
     <Compile Include="Controller\SupplierController.cs" />
     <Compile Include="Controller\UserController.cs" />
@@ -61,12 +62,15 @@
     <Compile Include="Dao\AttributeDao.cs" />
     <Compile Include="Dao\DBConnect.cs" />
     <Compile Include="Dao\InventoryDao.cs" />
+    <Compile Include="Dao\OrderDao.cs" />
+    <Compile Include="Model\OrderDetail.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\SupplierDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\WarehouseDao.cs" />
     <Compile Include="Model\Attributes.cs" />
     <Compile Include="Model\Inventory.cs" />
+    <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\User.cs" />

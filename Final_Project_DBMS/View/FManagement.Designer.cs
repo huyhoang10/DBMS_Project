@@ -52,9 +52,6 @@
             // 
             // guna2Panel1
             // 
-            this.guna2Panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(211)))), ((int)(((byte)(195)))));
             this.guna2Panel1.Controls.Add(this.btnProduct);
             this.guna2Panel1.Controls.Add(this.btnWarehouse);
@@ -65,9 +62,10 @@
             this.guna2Panel1.Controls.Add(this.btnStocking);
             this.guna2Panel1.Controls.Add(this.btnSupplier);
             this.guna2Panel1.Controls.Add(this.btnInventory);
+            this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(300, 1000);
+            this.guna2Panel1.Size = new System.Drawing.Size(300, 953);
             this.guna2Panel1.TabIndex = 0;
             // 
             // btnProduct
@@ -213,9 +211,6 @@
             // 
             // guna2Panel2
             // 
-            this.guna2Panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.guna2Panel2.Controls.Add(this.ucInventory1);
             this.guna2Panel2.Controls.Add(this.ucProduct1);
@@ -273,6 +268,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ucExpectedGoodsRecieve1.Location = new System.Drawing.Point(0, 0);
+            this.ucExpectedGoodsRecieve1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ucExpectedGoodsRecieve1.MaximumSize = new System.Drawing.Size(1750, 1035);
             this.ucExpectedGoodsRecieve1.Name = "ucExpectedGoodsRecieve1";
             this.ucExpectedGoodsRecieve1.Size = new System.Drawing.Size(1500, 1000);

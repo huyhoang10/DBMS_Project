@@ -23,6 +23,8 @@ namespace Final_Project_DBMS.View
         public void UCWarehouse_Load(object sender, EventArgs e)
         {
             LoadDgvWarehouse();
+            txtId.Enabled = false;
+            btnReset_Click(sender, e);
         }
 
         private void LoadDgvWarehouse()
@@ -32,11 +34,19 @@ namespace Final_Project_DBMS.View
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
+            txtAddress.Text = "";
+            txtId.Text = "";
+            txtName.Text = "";
+            btnAdd.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            if(txtName.Text == "" || txtAddress.Text == "")
+            {
+                MessageBox.Show("Nhập đầy đủ thông tin");
+                return;
+            }
             Warehouse warehouse = new Warehouse();
             if(txtId.Text == "")
             {
@@ -52,6 +62,36 @@ namespace Final_Project_DBMS.View
                 warehouse.Address = txtAddress.Text;
                 warehouseController.UpdateWarehouse(warehouse);
                 LoadDgvWarehouse();
+            }
+            btnReset_Click(sender,e);
+        }
+
+        private void dgvWarehouse_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex >=0 && e.ColumnIndex >= 0)
+            {
+                txtId.Text = dgvWarehouse.CurrentRow.Cells[0].Value.ToString();
+                txtName.Text = dgvWarehouse.CurrentRow.Cells[1].Value.ToString();
+                txtAddress.Text = dgvWarehouse.CurrentRow.Cells[2].Value.ToString();
+                btnSave.Enabled = true;
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            txtAddress.Text = "";
+            txtId.Text = "";
+            txtName.Text = "";
+            btnAdd.Enabled = true;
+            btnSave.Enabled = false;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(txtId.Text == "")
+            {
+                MessageBox.Show("Chọn kho để xóa");
+                return;
             }
         }
     }

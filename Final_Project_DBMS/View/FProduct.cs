@@ -50,12 +50,6 @@ namespace Final_Project_DBMS.View
                 Constants.dicColor[color.Name] = color.Id;
                 cmbColor.Items.Add(color.Name);
             }
-            List<Attributes> status = attributesController.GetDataAttributes(Constants.dicAttribute["Trạng thái"]);
-            foreach (Attributes size in status)
-            {
-                Constants.dicStatus[size.Name] = size.Id;
-                cmbStatus.Items.Add(size.Name);
-            }
             List<Attributes> units = attributesController.GetDataAttributes(Constants.dicAttribute["Đơn vị tính"]);
             foreach (Attributes unit in units)
             {
@@ -71,7 +65,6 @@ namespace Final_Project_DBMS.View
             cmbCategory.SelectedIndex = 0;
             cmbBrand.SelectedIndex = 0;
             cmbColor.SelectedIndex = 0;
-            cmbStatus.SelectedIndex = 0;
             cmbUnit.SelectedIndex = 0;
             cmbMaterial.SelectedIndex = 0;
 

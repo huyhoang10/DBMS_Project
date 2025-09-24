@@ -1,14 +1,30 @@
 ﻿use NhapHang
 go
 --===== CREATE TABLE =====
+
+CREATE TABLE NhanVien(
+	ma_nv int primary key identity,
+	hoten nvarchar(100) not null,
+	cccd varchar(12) not null,
+	gioitinh nvarchar(10),
+	ngaysinh date not null,
+	tuoi int check (tuoi>0)
+)
+
+
+
 CREATE TABLE [User]
 (
-	username nvarchar(100) PRIMARY key,
+	ma_tk int primary key identity,
+	ma_nv int,
+	username nvarchar(100) unique,
 	password nvarchar(50) not null,
-	roleId int not null
+	roleId int not null,
+	Constraint fk_User_NhanVien FOREIGN KEY (ma_nv) REFERENCES Nhanvien(ma_nv)
 )
 go
 
+drop table [User]
 
 CREATE TABLE NhaCungCap(
 	ma_ncc int primary key identity,
@@ -56,7 +72,6 @@ CREATE TABLE ThuongHieu (
     ten NVARCHAR(100) NOT NULL
 );
 
-drop table SanPham
 
 CREATE TABLE SanPham (
     ma_sp INT IDENTITY(1,1) PRIMARY KEY,    -- ID tự tăng
@@ -77,9 +92,6 @@ CREATE TABLE SanPham (
 );
 GO
 
-drop table SanPham
-
-drop table TonKho
 CREATE TABLE TonKho (
     ma_sp int,
     ma_kho int,
@@ -101,6 +113,47 @@ VALUES
 
 
 drop table SanPham,ThuongHieu, PhanLoai, MauSac, ChatLieu, DonViTinh, TrangThai
+
+CREATE TABLE LoaiDonHang(
+	ma int primary key identity,
+	ten nvarchar(50) not null
+)
+
+Insert into LoaiDonHang(ten)
+Values
+	(N'Đơn hàng dự kiến'),
+	(N'Đơn hàng thực tế')
+
+CREATE TABLE DonHang(
+	ma_don int primary key identity,
+	ngaylap datetime,
+	ma_nv int,
+	ghichu nvarchar(200),
+	ma_loai int,
+	tongtien decimal(18,0),
+	ma_ncc int,
+	ma_kho int,
+	ma_tt int, --ma_trangthai
+	khoa bit default 0,
+	ma_dhdk int, --ma_DonHangDuKien, Don Hang Thuc Te se tham chieu den de xu ly don hang nao
+	Constraint fk_DonHang_NhanVien Foreign key (ma_nv) References NhanVien(ma_nv),
+	Constraint fk_DonHang_LoaiDonHang Foreign key (ma_loai) References LoaiDonHang(ma),
+	Constraint fk_DonHang_NhaCungCap Foreign key (ma_ncc) References NhaCungCap(ma_ncc),
+	Constraint fk_DonHang_Kho Foreign key (ma_kho) References Kho(ma),
+	Constraint fk_DonHang_TrangThai Foreign key (ma_tt) References TrangThai(ma),
+	Constraint fk_DonHang_DonHang Foreign key (ma_dhdk) References DonHang(ma_don)
+)
+go
+drop table DonHang
+
+
+create table DonHangChiTiet(
+	ma_don int not null,
+	ma_sp int not null,
+	gia_dk decimal(18,0) not null, -- Gia du kien 
+	soluong int not null,
+	Constraint pk_DHCT Primary Key (ma_don, ma_sp)
+)
 
 --===== CREATE VIEW =====
 
@@ -152,6 +205,44 @@ select * from v_TonKho_Chitiet
 
 drop view v_SanPham_Chitiet
 select * from v_SanPham_Chitiet
+
+
+Create view v_DonHangDuKien 
+as
+select ma_don,ngaylap,nv.ma_nv, tongtien, ncc.ten_ncc, k.ten  as 'kho', tt.ten as 'trangthai',dh.ghichu from DonHang dh
+left join NhanVien nv on nv.ma_nv = dh.ma_nv
+left join LoaiDonHang ldh on ldh.ma = dh.ma_loai
+left join NhaCungCap ncc on ncc.ma_ncc = dh.ma_ncc
+left join Kho k on k.ma = dh.ma_kho
+left join TrangThai tt on tt.ma = dh.ma_tt
+where ldh.ma = 1
+
+drop view v_DonHangDuKien
+
+select * from v_DonHangDuKien
+
+create view v_DonHangCanXuLy
+as
+select ma_don, ngaylap, ma_nv from DonHang dh
+where dh.ma_tt = 1
+
+select * from v_DonHangCanXuLy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --===== CREATE PROC =====
 create proc prc_LayDuLieuThuocTinh
 	@nametable nvarchar(50)
@@ -350,7 +441,7 @@ return (select * from v_SanPham_Chitiet where  ma_sp = @key);
 go
 
 drop function fn_TimSanPhamByID
-
+/*
 create function fn_CheckRoleId(@username nvarchar(100), @password nvarchar(50))
 returns int
 as 
@@ -362,6 +453,7 @@ begin
 	return @roleId;
 end
 go
+*/
 
 create function fn_LaySPTheoKho(@tenkho nvarchar(50))
 returns table
@@ -380,6 +472,37 @@ go
 drop function fn_TimSPTrongTonKho
 
 Select * from dbo.fn_LaySPTheoKho(N'A2')
+
+
+go
+create function fn_ChitietDonHang (@madon int)
+returns table
+as
+	return (select dhct.ma_sp, sp.ten_sp,dhct.gia_dk, dvt.ten as 'dvt', dhct.soluong  from DonHangChiTiet dhct
+	left join SanPham sp on dhct.ma_sp = sp.ma_sp
+	left join DonViTinh dvt on sp.ma_dvt = dvt.ma
+	where ma_don = @madon)
+go
+
+drop function fn_ChitietDonHang
+
+select * from dbo.fn_ChitietDonHang(1)
+
+go
+create function fn_LayDonHangTheoMa(@ma_don int)
+returns table
+as
+	return (select ma_don,ngaylap,nv.ma_nv,tongtien, ncc.ten_ncc, k.ten as 'kho', tt.ten as 'trangthai',dh.ghichu from DonHang dh
+left join NhanVien nv on nv.ma_nv = dh.ma_nv
+left join NhaCungCap ncc on ncc.ma_ncc = dh.ma_ncc
+left join Kho k on k.ma = dh.ma_kho
+left join TrangThai tt on tt.ma = dh.ma_tt
+where dh.ma_don = @ma_don)
+go
+
+
+select * from fn_LayDonHangTheoMa(1)
+
 
 
 -- Bảng PhanLoai
@@ -437,3 +560,49 @@ VALUES
 (N'Tủ quần áo 3 cánh IKEA', 1, 3, 1, 2, N'200x60x220 cm', 1, N'Tủ quần áo gỗ công nghiệp màu trắng'),
 (N'Giường ngủ gỗ công nghiệp Hòa Phát', 2, 4, 2, 2, N'160x200 cm', 1, N'Giường đôi bằng gỗ công nghiệp'),
 (N'Bộ bàn ăn 6 ghế Phong Vũ', 3, 1, 4, 1, N'180x90x75 cm', 2, N'Bàn ăn gỗ sồi kèm 6 ghế');
+
+INSERT INTO NhanVien (hoten, cccd, gioitinh, ngaysinh, tuoi)
+VALUES
+    (N'Nguyễn Văn An',   '012345678901', N'Nam', '1995-03-15', 30),
+    (N'Trần Thị Bình',   '123456789012', N'Nữ',  '1998-07-20', 27),
+    (N'Lê Văn Cường',   '234567890123', N'Nam', '1990-11-05', 34),
+    (N'Phạm Thị Dung',   '345678901234', N'Nữ',  '2000-01-10', 25),
+    (N'Hoàng Minh Tuấn', '456789012345', N'Nam', '1988-06-25', 37);
+
+
+INSERT INTO DonHang (ngaylap, ma_nv, ghichu, ma_loai, tongtien, ma_ncc, ma_kho, ma_tt, khoa)
+VALUES
+('2025-09-20 10:30:00', 1, N'Đơn hàng nhập vật tư', 1, 1500000, 1, 1, 1, 0),
+('2025-09-20 15:00:00', 2, N'Đơn hàng bán lẻ', 2, 2500000, 2, 1, 2, 0),
+('2025-09-21 09:20:00', 3, N'Đơn hàng bán sỉ', 2, 5000000, 1, 2, 3, 0),
+('2025-09-21 14:45:00', 1, N'Đơn hàng hoàn trả', 1, 800000, 2, 2, 1, 1),
+('2025-09-22 11:10:00', 2, N'Đơn hàng nhập định kỳ', 1, 3200000, 1, 1, 2, 0);
+
+
+INSERT INTO DonHangChiTiet (ma_don, ma_sp, gia_dk, soluong)
+VALUES
+-- Đơn hàng 1
+(1, 1, 120000, 2),
+(1, 2, 45000, 5),
+(1, 3, 78000, 1),
+(1, 4, 56000, 3),
+-- Đơn hàng 2
+(2, 1, 125000, 3),
+(2, 2, 47000, 2),
+(2, 5, 99000, 4),
+(2, 3, 80000, 1),
+-- Đơn hàng 3
+(3, 2, 46000, 6),
+(3, 4, 55000, 2),
+(3, 5, 100000, 3),
+(3, 1, 128000, 1),
+-- Đơn hàng 4
+(4, 3, 81000, 4),
+(4, 5, 102000, 2),
+(4, 2, 46500, 3),
+(4, 4, 57000, 5),
+-- Đơn hàng 5
+(5, 1, 130000, 2),
+(5, 3, 83000, 1),
+(5, 4, 59000, 4),
+(5, 5, 105000, 3);
