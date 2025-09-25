@@ -211,7 +211,7 @@
             // 
             // guna2Panel2
             // 
-            this.guna2Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.guna2Panel2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.guna2Panel2.Controls.Add(this.ucInventory1);
             this.guna2Panel2.Controls.Add(this.ucProduct1);
             this.guna2Panel2.Controls.Add(this.ucWarehouse1);
@@ -221,7 +221,7 @@
             this.guna2Panel2.Controls.Add(this.ucHistory1);
             this.guna2Panel2.Location = new System.Drawing.Point(300, 0);
             this.guna2Panel2.Name = "guna2Panel2";
-            this.guna2Panel2.Size = new System.Drawing.Size(1500, 1200);
+            this.guna2Panel2.Size = new System.Drawing.Size(1700, 1200);
             this.guna2Panel2.TabIndex = 1;
             // 
             // ucInventory1
@@ -230,7 +230,7 @@
             this.ucInventory1.Location = new System.Drawing.Point(0, 0);
             this.ucInventory1.MaximumSize = new System.Drawing.Size(1700, 1000);
             this.ucInventory1.Name = "ucInventory1";
-            this.ucInventory1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucInventory1.Size = new System.Drawing.Size(1700, 1000);
             this.ucInventory1.TabIndex = 5;
             this.ucInventory1.Load += new System.EventHandler(this.ucInventory1_Load);
             // 
@@ -239,7 +239,7 @@
             this.ucProduct1.Location = new System.Drawing.Point(0, 0);
             this.ucProduct1.MaximumSize = new System.Drawing.Size(1700, 1000);
             this.ucProduct1.Name = "ucProduct1";
-            this.ucProduct1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucProduct1.Size = new System.Drawing.Size(1700, 1000);
             this.ucProduct1.TabIndex = 7;
             this.ucProduct1.Load += new System.EventHandler(this.ucProduct1_Load);
             // 
@@ -248,7 +248,7 @@
             this.ucWarehouse1.Location = new System.Drawing.Point(0, 0);
             this.ucWarehouse1.MaximumSize = new System.Drawing.Size(1700, 1000);
             this.ucWarehouse1.Name = "ucWarehouse1";
-            this.ucWarehouse1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucWarehouse1.Size = new System.Drawing.Size(1700, 1000);
             this.ucWarehouse1.TabIndex = 6;
             // 
             // ucSupplier1
@@ -259,7 +259,7 @@
             this.ucSupplier1.Location = new System.Drawing.Point(0, 0);
             this.ucSupplier1.MaximumSize = new System.Drawing.Size(1750, 1035);
             this.ucSupplier1.Name = "ucSupplier1";
-            this.ucSupplier1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucSupplier1.Size = new System.Drawing.Size(1700, 1000);
             this.ucSupplier1.TabIndex = 1;
             // 
             // ucExpectedGoodsRecieve1
@@ -271,7 +271,7 @@
             this.ucExpectedGoodsRecieve1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ucExpectedGoodsRecieve1.MaximumSize = new System.Drawing.Size(1750, 1035);
             this.ucExpectedGoodsRecieve1.Name = "ucExpectedGoodsRecieve1";
-            this.ucExpectedGoodsRecieve1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucExpectedGoodsRecieve1.Size = new System.Drawing.Size(1700, 1000);
             this.ucExpectedGoodsRecieve1.TabIndex = 2;
             // 
             // ucStocking1
@@ -282,7 +282,7 @@
             this.ucStocking1.Location = new System.Drawing.Point(0, 0);
             this.ucStocking1.MaximumSize = new System.Drawing.Size(1750, 1035);
             this.ucStocking1.Name = "ucStocking1";
-            this.ucStocking1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucStocking1.Size = new System.Drawing.Size(1700, 1000);
             this.ucStocking1.TabIndex = 3;
             // 
             // ucHistory1
@@ -294,13 +294,14 @@
             this.ucHistory1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ucHistory1.MaximumSize = new System.Drawing.Size(1750, 1035);
             this.ucHistory1.Name = "ucHistory1";
-            this.ucHistory1.Size = new System.Drawing.Size(1500, 1000);
+            this.ucHistory1.Size = new System.Drawing.Size(1700, 1000);
             this.ucHistory1.TabIndex = 4;
             // 
             // FManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(1782, 953);
             this.Controls.Add(this.guna2Panel2);
             this.Controls.Add(this.guna2Panel1);

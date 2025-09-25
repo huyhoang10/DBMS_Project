@@ -67,7 +67,7 @@
             this.btnDelete.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(1281, 844);
+            this.btnDelete.Location = new System.Drawing.Point(1449, 940);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(150, 50);
             this.btnDelete.TabIndex = 2;
@@ -112,7 +112,7 @@
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.dgvInventory.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvInventory.RowTemplate.Height = 30;
-            this.dgvInventory.Size = new System.Drawing.Size(1381, 634);
+            this.dgvInventory.Size = new System.Drawing.Size(1647, 744);
             this.dgvInventory.TabIndex = 18;
             this.dgvInventory.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvInventory.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -194,7 +194,7 @@
             this.btnSearch.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.ForeColor = System.Drawing.Color.White;
-            this.btnSearch.Location = new System.Drawing.Point(1329, 121);
+            this.btnSearch.Location = new System.Drawing.Point(1595, 121);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(102, 63);
             this.btnSearch.TabIndex = 28;
@@ -214,7 +214,7 @@
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.DimGray;
             this.txtSearch.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtSearch.Location = new System.Drawing.Point(1035, 121);
+            this.txtSearch.Location = new System.Drawing.Point(1301, 121);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderForeColor = System.Drawing.Color.DimGray;
@@ -234,7 +234,7 @@
             this.cmbWarehouse.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbWarehouse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
             this.cmbWarehouse.ItemHeight = 40;
-            this.cmbWarehouse.Location = new System.Drawing.Point(836, 121);
+            this.cmbWarehouse.Location = new System.Drawing.Point(1102, 121);
             this.cmbWarehouse.Name = "cmbWarehouse";
             this.cmbWarehouse.Size = new System.Drawing.Size(183, 46);
             this.cmbWarehouse.TabIndex = 29;
@@ -251,8 +251,9 @@
             this.Controls.Add(this.dgvInventory);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.guna2HtmlLabel1);
+            this.MaximumSize = new System.Drawing.Size(1700, 1200);
             this.Name = "UCInventory";
-            this.Size = new System.Drawing.Size(1500, 1000);
+            this.Size = new System.Drawing.Size(1700, 1200);
             this.Load += new System.EventHandler(this.UCWarehouse_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
             this.ResumeLayout(false);

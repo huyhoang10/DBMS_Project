@@ -34,29 +34,34 @@ namespace Final_Project_DBMS.View
         private void LoadCmb()
         {
             List<Attributes> categorys = attributesController.GetDataAttributes(Constants.dicAttribute["Phân loại"]);
+            cmbCategory.Items.Clear();
             foreach (Attributes category in categorys) {
                 Constants.dicCategory[category.Name] = category.Id;
                 cmbCategory.Items.Add(category.Name);
             }
             List<Attributes> brands = attributesController.GetDataAttributes(Constants.dicAttribute["Thương hiệu"]);
+            cmbBrand.Items.Clear();
             foreach (Attributes brand in brands)
             {
                 Constants.dicBrand[brand.Name] = brand.Id;
                 cmbBrand.Items.Add(brand.Name);
             }
             List<Attributes> colors = attributesController.GetDataAttributes(Constants.dicAttribute["Màu sắc"]);
+            cmbColor.Items.Clear();
             foreach (Attributes color in colors)
             {
                 Constants.dicColor[color.Name] = color.Id;
                 cmbColor.Items.Add(color.Name);
             }
             List<Attributes> units = attributesController.GetDataAttributes(Constants.dicAttribute["Đơn vị tính"]);
+            cmbUnit.Items.Clear();
             foreach (Attributes unit in units)
             {
                 Constants.dicUnit[unit.Name] = unit.Id;
                 cmbUnit.Items.Add(unit.Name);
             }
             List<Attributes> materials = attributesController.GetDataAttributes(Constants.dicAttribute["Chất liệu"]);
+            cmbMaterial.Items.Clear();
             foreach (Attributes material in materials)
             {
                 Constants.dicMaterial[material.Name] = material.Id;

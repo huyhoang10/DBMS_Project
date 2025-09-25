@@ -84,7 +84,7 @@
             this.dgvDetail.RowHeadersVisible = false;
             this.dgvDetail.RowHeadersWidth = 51;
             this.dgvDetail.RowTemplate.Height = 24;
-            this.dgvDetail.Size = new System.Drawing.Size(731, 492);
+            this.dgvDetail.Size = new System.Drawing.Size(995, 534);
             this.dgvDetail.TabIndex = 1;
             this.dgvDetail.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.dgvDetail.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -124,15 +124,15 @@
             this.grbDetail.Controls.Add(this.txtDescription);
             this.grbDetail.Controls.Add(this.txtStatus);
             this.grbDetail.Controls.Add(this.txtStaff);
-            this.grbDetail.Controls.Add(this.txtId);
             this.grbDetail.Controls.Add(this.dtpDate);
+            this.grbDetail.Controls.Add(this.txtId);
             this.grbDetail.Controls.Add(this.dgvDetail);
             this.grbDetail.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grbDetail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
             this.grbDetail.Location = new System.Drawing.Point(651, 190);
             this.grbDetail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grbDetail.Name = "grbDetail";
-            this.grbDetail.Size = new System.Drawing.Size(781, 700);
+            this.grbDetail.Size = new System.Drawing.Size(1046, 746);
             this.grbDetail.TabIndex = 4;
             this.grbDetail.Text = "Chi tiết";
             this.grbDetail.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -245,7 +245,7 @@
             this.grbLog.Location = new System.Drawing.Point(51, 190);
             this.grbLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grbLog.Name = "grbLog";
-            this.grbLog.Size = new System.Drawing.Size(553, 700);
+            this.grbLog.Size = new System.Drawing.Size(553, 746);
             this.grbLog.TabIndex = 22;
             this.grbLog.Text = "Chi tiết";
             this.grbLog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -257,7 +257,7 @@
             this.dgvSupplier.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Crimson;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -271,7 +271,7 @@
             this.col_status});
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Crimson;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
@@ -344,7 +344,7 @@
             this.Controls.Add(this.guna2HtmlLabel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UCHistory";
-            this.Size = new System.Drawing.Size(1500, 999);
+            this.Size = new System.Drawing.Size(1700, 1000);
             this.Load += new System.EventHandler(this.UCHistory_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
             this.grbDetail.ResumeLayout(false);

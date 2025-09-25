@@ -31,6 +31,8 @@ namespace Final_Project_DBMS.View
 
         public void UCExpectedGoodsRecieve_Load(object sender, EventArgs e)
         {
+            dtpDate.Format = DateTimePickerFormat.Custom;
+            dtpDate.CustomFormat = "dd/MM/yyyy HH:mm:ss";
             allProducts = productController.GetAllProduct();
             availableProducts = new List<Product>(allProducts); // clone danh sách
 
@@ -201,7 +203,21 @@ namespace Final_Project_DBMS.View
             {
                 if (dgvDetailOder.CurrentCell.Value == null)
                     return;
+                var idProductCell = dgvDetailOder.Rows[e.RowIndex].Cells[1];
+                
+                if (!int.TryParse(idProductCell.Value.ToString(), NumberStyles.Integer, CultureInfo.CurrentCulture, out int qtyVal))
+                {
+                    MessageBox.Show("Giá trị ở cột Mã SP phải là số nguyên.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    idProductCell.Value = null;
+                    return;
+                }
                 int idProduct = Int32.Parse(dgvDetailOder.Rows[e.RowIndex].Cells[1].Value.ToString());
+                Product isProduct = allProducts.FirstOrDefault(p => p.Id == idProduct);
+                if (isProduct == null) {
+                    MessageBox.Show("Mã sản phẩm không tồn tại!", "Thông báo");
+                    dgvDetailOder.CurrentCell.Value = null;
+                    return;
+                }
                 foreach (DataGridViewRow row in dgvDetailOder.Rows)
                 {
                     if (row.Index == e.RowIndex) break; // bỏ qua dòng hiện tại
@@ -278,7 +294,7 @@ namespace Final_Project_DBMS.View
             {
                 stt++;
                 dgvDetailOder.Rows.Add();
-                dgvDetailOder.Rows[stt-1].Cells["col_index"].Value = stt.ToString();
+                dgvDetailOder.Rows[stt - 1].Cells["col_index"].Value = stt.ToString();
                 dgvDetailOder.Rows[stt - 1].Cells["col_id"].Value = detail.IdProduct;
                 
                 dgvDetailOder.Rows[stt - 1].Cells["col_price"].Value = detail.Price;
