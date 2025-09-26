@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Final_Project_DBMS.Model;
 using System.Globalization;
+using Final_Project_DBMS.Dao;
 
 namespace Final_Project_DBMS.View
 {
@@ -17,6 +18,8 @@ namespace Final_Project_DBMS.View
     {
         OrderController orderController = new OrderController();
         ProductController productController = new ProductController();
+        SupplierController supplierController = new SupplierController();
+        WarehouseController warehouseController = new WarehouseController();
         List<Product> allProducts;
         List<Product> availableProducts;
         public UCStocking()
@@ -36,6 +39,27 @@ namespace Final_Project_DBMS.View
             dgvDetailOder.DefaultValuesNeeded += dgvDetailOder_DefaultValuesNeeded;
             btnReset_Click(sender, e);
             dgvDetailOder.Enabled = true;
+
+            DataGridViewColumn col_index = dgvDetailOder.Columns[0];
+            col_index.ReadOnly = true;
+            DataGridViewColumn col_unit = dgvDetailOder.Columns[4];
+            col_unit.ReadOnly = true;
+
+            LoadCmb();
+            cmbSupplier.Enabled = false;
+            cmbWarehouse.Enabled = false;
+        }
+
+        private void LoadCmb()
+        {
+            cmbSupplier.DataSource = supplierController.GetAllSupllier();
+            cmbSupplier.DisplayMember = "Name";
+            cmbSupplier.ValueMember = "Id";
+
+            cmbWarehouse.DataSource = warehouseController.GetAllWarehouse();
+            cmbWarehouse.DisplayMember = "Name";
+            cmbWarehouse.ValueMember = "Id";
+
         }
 
         private void dgvDetailOder_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
@@ -68,7 +92,7 @@ namespace Final_Project_DBMS.View
         private void LoadDgvOrderExpect()
         {
             dgvOrderExpect.AutoGenerateColumns = false;
-            dgvOrderExpect.DataSource = orderController.GetAllOrderExpect();
+            dgvOrderExpect.DataSource = orderController.GetOrderPending();
 
         }
 
@@ -102,6 +126,11 @@ namespace Final_Project_DBMS.View
             dgvDetailOder.Enabled = true;
             btnAccept.Enabled = true;
             btnSame.Enabled = true;
+            cmbSupplier.Text = order.Supplier;
+            cmbWarehouse.Text = order.Warehouse;
+            txtIdOrderPending.Text = order.IdOrder.ToString();
+            txtDescription.Text = order.Note;
+
 
         }
 
@@ -240,26 +269,37 @@ namespace Final_Project_DBMS.View
 
         }
 
-        private void dgvDetailOder_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            var row = dgvDetailOder.Rows[e.RowIndex];
-            if (row.IsNewRow) return; // bỏ qua dòng ảo
+        //private void dgvDetailOder_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    var row = dgvDetailOder.Rows[e.RowIndex];
+        //    if (row.IsNewRow) return; // bỏ qua dòng ảo
 
-            // Ví dụ: cột 1 (ID), cột 3 (Price), cột 5 (Quantity) phải có dữ liệu
-            if (row.Cells[1].Value == null || string.IsNullOrWhiteSpace(row.Cells[1].Value.ToString()) ||
-                row.Cells[3].Value == null || string.IsNullOrWhiteSpace(row.Cells[3].Value.ToString()) ||
-                row.Cells[5].Value == null || string.IsNullOrWhiteSpace(row.Cells[5].Value.ToString()))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin trước khi sang dòng mới.",
-                                "Thiếu dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    // Ví dụ: cột 1 (ID), cột 3 (Price), cột 5 (Quantity) phải có dữ liệu
+        //    if (row.Cells[1].Value == null || string.IsNullOrWhiteSpace(row.Cells[1].Value.ToString()) ||
+        //        row.Cells[3].Value == null || string.IsNullOrWhiteSpace(row.Cells[3].Value.ToString()) ||
+        //        row.Cells[5].Value == null || string.IsNullOrWhiteSpace(row.Cells[5].Value.ToString()))
+        //    {
+        //        MessageBox.Show("Vui lòng nhập đầy đủ thông tin trước khi sang dòng mới.",
+        //                        "Thiếu dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                e.Cancel = true; // ngăn không cho rời dòng
-            }
-        }
+        //        e.Cancel = true; // ngăn không cho rời dòng
+        //    }
+        //}
 
         private void btnSame_Click(object sender, EventArgs e)
         {
-            
+            dgvOrderExpect.Enabled = false;
+            int stt = 1;
+            foreach (DataGridViewRow row in dgvOrderDetailExpect.Rows)
+            {
+                if (row.IsNewRow) continue; // bỏ qua dòng ảo
+                dgvDetailOder.Rows.Add();
+                dgvDetailOder.Rows[stt - 1].Cells[0].Value = stt.ToString();
+                dgvDetailOder.Rows[stt - 1].Cells[1].Value = row.Cells["col_idProductExpect"].Value.ToString();
+                dgvDetailOder.Rows[stt - 1].Cells[3].Value = row.Cells[3].Value.ToString();
+                dgvDetailOder.Rows[stt - 1].Cells[5].Value = row.Cells[5].Value.ToString();
+                stt++;
+            }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -270,11 +310,55 @@ namespace Final_Project_DBMS.View
             dgvOrderDetailExpect.Enabled = false;
             btnAccept.Enabled = false;
             btnSame.Enabled = false;
-            txtId.Text = "";
-            txtId.Enabled = false;
+            txtIdOrderPending.Text = "";
+            txtIdOrderPending.Enabled = false;
             dtpDate.Value = DateTime.Now;
             dtpDate.Enabled = false;
+            dgvOrderExpect.Enabled = true;
 
+        }
+
+        private void dgvDetailOder_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            int stt = 1;
+            foreach (DataGridViewRow row in dgvDetailOder.Rows)
+            {
+                row.Cells[0].Value = stt++;
+            }
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            foreach (DataGridViewRow row in dgvDetailOder.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells[1].Value == null || row.Cells[3].Value == null || row.Cells[5] == null)
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin đơn hàng", "Thông báo");
+                    return;
+                }
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.IdProduct = Int32.Parse(row.Cells[1].Value.ToString());
+                orderDetail.Price = decimal.Parse(row.Cells[3].Value.ToString());
+                orderDetail.Quantity = Int32.Parse(row.Cells[5].Value.ToString());
+                orderDetails.Add(orderDetail);
+            }
+            Order order = new Order();
+            dtpDate.Value = DateTime.Now;
+            order.OrderDate = dtpDate.Value;
+            order.IdStaff = 1;//Int32.Parse(txtIdStaff.Text);
+            order.Warehouse = cmbSupplier.SelectedValue.ToString();
+            order.Supplier = cmbSupplier.SelectedValue.ToString();
+            int idOrderPending = Int32.Parse(txtIdOrderPending.Text.ToString());
+            orderController.InsertOrderActual(idOrderPending,orderDetails, order);
+            LoadDgvOrderExpect();
+            btnReset_Click(sender, e);
         }
     }
 }

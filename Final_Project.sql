@@ -124,6 +124,11 @@ Values
 	(N'Đơn hàng dự kiến'),
 	(N'Đơn hàng thực tế')
 
+Create table TrangThaiDH(
+	ma int primary key identity,
+	ten nvarchar(255),
+)
+
 CREATE TABLE DonHang(
 	ma_don int primary key identity,
 	ngaylap datetime,
@@ -140,11 +145,15 @@ CREATE TABLE DonHang(
 	Constraint fk_DonHang_LoaiDonHang Foreign key (ma_loai) References LoaiDonHang(ma),
 	Constraint fk_DonHang_NhaCungCap Foreign key (ma_ncc) References NhaCungCap(ma_ncc),
 	Constraint fk_DonHang_Kho Foreign key (ma_kho) References Kho(ma),
-	Constraint fk_DonHang_TrangThai Foreign key (ma_tt) References TrangThai(ma),
+	Constraint fk_DonHang_TrangThai Foreign key (ma_tt) References TrangThaiDH(ma),
 	Constraint fk_DonHang_DonHang Foreign key (ma_dhdk) References DonHang(ma_don)
 )
 go
-drop table DonHang
+alter table DonHang
+drop fk_DonHang_TrangThai
+
+alter table DonHang
+Add constraint fk_DonHang_TrangThaiDH Foreign key (ma_tt) references TrangThaiDH(ma)
 
 
 create table DonHangChiTiet(
@@ -154,6 +163,211 @@ create table DonHangChiTiet(
 	soluong int not null,
 	Constraint pk_DHCT Primary Key (ma_don, ma_sp)
 )
+
+drop table LichSu
+create table LichSu(
+	ma_ls int primary key identity,
+	thoigian datetime,
+	ma_don int,
+	ghichu nvarchar(255),
+	constraint fk_LichSu_DonHang foreign key (ma_don) references DonHang(ma_don)
+)
+
+
+
+----------------Transaction-----------------
+-- Bang ao chua danh sach san pham
+create type dbo.DanhSachSanPham as table(
+	ma_sp int not null primary key,
+	gia_dk decimal(18,0) not null,
+	soluong int not null
+);
+
+drop table DanhSachSanPham
+
+drop proc prc_ThemDonHangDuKien
+CREATE PROCEDURE prc_ThemDonHangDuKien
+	@makho int,
+	@ma_nv int,
+    @ma_ncc int,
+    @ChiTietPhieuNhap AS dbo.DanhSachSanPham READONLY  -- Table-valued parameter
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+		-- Tinh tong so tien 
+		DECLARE @tongtien DECIMAL(18,0);
+		SELECT @tongtien = SUM(gia_dk * soluong) FROM @ChiTietPhieuNhap;
+        -- 1. Thêm phiếu nhập
+        INSERT INTO DonHang (ngaylap, ma_nv,ma_ncc,ma_kho,tongtien, ma_loai,ma_tt)
+        VALUES (GETDATE(),@ma_nv,@ma_ncc,@makho,@tongtien,1,1);  --ma loai = 1 (don hang du kien), ma_tt = 1 (can xu ly)
+
+        DECLARE @ma_don INT = SCOPE_IDENTITY();
+
+        -- 2. Thêm chi tiết
+        INSERT INTO DonHangChiTiet(ma_don, ma_sp, gia_dk, soluong)
+        SELECT @ma_don, ma_sp, gia_dk, soluong FROM @ChiTietPhieuNhap;
+		
+		-- 3. Ghi lịch sử
+		INSERT INTO LichSu(thoigian,ma_don,ghichu)
+        Values (GETDATE(),@ma_don,N'Tạo đơn hàng dự kiến')
+		
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW; -- Báo lỗi ra ngoài cho C# biết
+    END CATCH
+END
+
+
+
+
+DECLARE @DanhSach dbo.DanhSachSanPham;
+INSERT INTO @DanhSach (ma_sp, gia_dk, soluong)
+VALUES (1, 100000, 5),  -- sp1, giá 100k, SL 5
+       (2, 200000, 2);  -- sp2, giá 200k, SL 2
+EXEC prc_ThemDonHangDuKien
+	@makho = 2,
+    @ma_nv = 1,
+    @ma_ncc = 1,
+    @ChiTietPhieuNhap = @DanhSach
+
+
+drop procedure prc_HuyDonHangDuKien
+CREATE procedure prc_HuyDonHangDuKien
+	@ma_don int
+as
+begin
+	begin try
+		begin transaction;
+
+		declare @ma_tt int;
+		select @ma_tt = ma_tt 
+		from DonHang with(updlock,rowlock)
+		where ma_don = @ma_don
+
+		if @ma_tt is null
+		begin
+			raiserror(N'Đơn hàng không tồn tại.',16,1);
+			rollback transaction;
+			return;
+		end;
+
+
+		if @ma_tt = 1
+		begin
+			update DonHang
+			set ma_tt = 2 -- ma_tt=2 hủy đơn hàng
+			where ma_don = @ma_don
+
+			insert into LichSu(thoigian,ma_don,ghichu)
+			values(GETDATE(),@ma_don,N'Hủy đơn hàng')
+		end;
+		else
+			begin
+				raiserror(N'Trạng thái không hợp lệ',16,1);
+				rollback transaction;
+				return;
+			end;
+		commit transaction;
+	end try
+	begin catch
+		if @@TRANCOUNT > 0 rollback transaction;
+		throw;
+	end catch
+end
+
+exec prc_HuyDonHangDuKien 6
+
+drop procedure prc_ThemDonHangThucTe
+create procedure prc_ThemDonHangThucTe
+	@makho int,
+	@ma_nv int,
+    @ma_ncc int,
+	@ma_dhxuly int,
+    @ChiTietPhieuNhap AS dbo.DanhSachSanPham READONLY
+as
+begin
+	begin try
+		begin transaction;
+		declare @trangthai int
+		select @trangthai = ma_tt 
+		from DonHang with (updlock,rowlock)
+		where ma_don = @ma_dhxuly
+
+		if @trangthai is null 
+		begin
+			raiserror(N'Đơn hàng xử lý không tồn tại',16,1);
+			rollback transaction;
+			return;
+		end
+
+		if @trangthai = 1
+		begin
+			--tinh tong so tien
+			declare @tongtien decimal(18,2)
+			select @tongtien = Sum(gia_dk*soluong) from @ChiTietPhieuNhap;
+			-- Tao don hang thuc te
+			Insert into DonHang(ngaylap, ma_nv,ma_ncc,ma_kho,tongtien, ma_loai,ma_tt,ma_dhdk)
+			values(GETDATE(),@ma_nv,@ma_ncc,@makho,@tongtien,2,3,@ma_dhxuly) -- ma_loai = 2: Đơn hàng thực tế, ma_tt = 3:Đã xử lý
+			-- Them chi tiet don hang
+			declare @madon int = scope_identity();
+			Insert into DonHangChiTiet(ma_don,ma_sp,gia_dk,soluong)
+			select @madon,ma_sp,gia_dk,soluong from @ChiTietPhieuNhap;
+			-- Cap nhat trang thai don hang du kien
+			Update DonHang
+			Set ma_tt = 3 -- ma_tt = 3: don hang da xu ly
+			where ma_don = @ma_dhxuly
+			-- Cap nhat ton kho
+			Insert Into TonKho(ma_kho,ma_sp,soluong)
+			Select @makho,ma_sp,soluong from @ChiTietPhieuNhap
+			-- Ghi lich su
+			Insert into LichSu(thoigian,ma_don,ghichu)
+			values(GETDATE(),@madon,N'Xử lý đơn hàng '+CAST(@ma_dhxuly as nvarchar(50)))
+
+		end
+		else
+			begin
+				raiserror(N'Trạng thái đơn hàng không hợp lệ',16,1)
+				rollback transaction;
+				return
+			end
+		commit transaction;
+	end try
+	begin catch
+		if @@TRANCOUNT > 0 rollback;
+		throw;
+	end catch
+
+end
+
+-- Bước 2: Tạo danh sách sản phẩm để nhập
+DECLARE @ds dbo.DanhSachSanPham;
+INSERT INTO @ds(ma_sp, gia_dk, soluong)
+VALUES (1, 10000, 5),  -- SP1: 5 cái, giá 10.000
+       (2, 20000, 3);  -- SP2: 3 cái, giá 20.000
+
+-- Bước 3: Gọi procedure xử lý
+EXEC prc_ThemDonHangThucTe
+    @makho = 2,          -- Mã kho
+    @ma_nv = 1,        -- Nhân viên xử lý
+    @ma_ncc = 2,       -- Nhà cung cấp
+    @ma_dhxuly = 13,      -- Đơn hàng dự kiến cần xử lý
+    @ChiTietPhieuNhap = @ds;
+
+
+select * from DonHangChiTiet
+
+
+
+
+
+
+
 
 --===== CREATE VIEW =====
 
@@ -214,16 +428,22 @@ left join NhanVien nv on nv.ma_nv = dh.ma_nv
 left join LoaiDonHang ldh on ldh.ma = dh.ma_loai
 left join NhaCungCap ncc on ncc.ma_ncc = dh.ma_ncc
 left join Kho k on k.ma = dh.ma_kho
-left join TrangThai tt on tt.ma = dh.ma_tt
+left join TrangThaiDH tt on tt.ma = dh.ma_tt
 where ldh.ma = 1
 
 drop view v_DonHangDuKien
 
 select * from v_DonHangDuKien
 
+drop view v_DonHangCanXuLy
 create view v_DonHangCanXuLy
 as
-select ma_don, ngaylap, ma_nv from DonHang dh
+select ma_don,ngaylap,nv.ma_nv, tongtien, ncc.ten_ncc, k.ten  as 'kho', tt.ten as 'trangthai',dh.ghichu from DonHang dh
+left join NhanVien nv on nv.ma_nv = dh.ma_nv
+left join LoaiDonHang ldh on ldh.ma = dh.ma_loai
+left join NhaCungCap ncc on ncc.ma_ncc = dh.ma_ncc
+left join Kho k on k.ma = dh.ma_kho
+left join TrangThaiDH tt on tt.ma = dh.ma_tt
 where dh.ma_tt = 1
 
 select * from v_DonHangCanXuLy
@@ -496,13 +716,30 @@ as
 left join NhanVien nv on nv.ma_nv = dh.ma_nv
 left join NhaCungCap ncc on ncc.ma_ncc = dh.ma_ncc
 left join Kho k on k.ma = dh.ma_kho
-left join TrangThai tt on tt.ma = dh.ma_tt
+left join TrangThaiDH tt on tt.ma = dh.ma_tt
 where dh.ma_don = @ma_don)
 go
-
+drop function fn_LayDonHangTheoMa
 
 select * from fn_LayDonHangTheoMa(1)
 
+-------------Trigger------------------
+CREATE TRIGGER trg_TonKho_Insert
+ON TonKho
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    MERGE TonKho AS target
+    USING inserted AS source
+    ON target.ma_kho = source.ma_kho AND target.ma_sp = source.ma_sp
+    WHEN MATCHED THEN
+        UPDATE SET target.soluong = target.soluong + source.soluong
+    WHEN NOT MATCHED THEN
+        INSERT (ma_kho, ma_sp, soluong)
+        VALUES (source.ma_kho, source.ma_sp, source.soluong);
+END
 
 
 -- Bảng PhanLoai

@@ -49,6 +49,11 @@ namespace Final_Project_DBMS.View
             txtIdOder.Enabled = false;
             txtTotal.Enabled = false;
             btnSave.Enabled = false;
+
+            DataGridViewColumn col_index = dgvDetailOder.Columns[0];
+            col_index.ReadOnly = true;
+            DataGridViewColumn col_unit = dgvDetailOder.Columns[4];
+            col_unit.ReadOnly = true;
         }
 
 
@@ -76,14 +81,14 @@ namespace Final_Project_DBMS.View
 
         private void LoadCmb()
         {
-            foreach (var item in supplierController.GetAllSupllier())
-            {
-                cmbSupplier.Items.Add(item.Name);
-            }
-            foreach (var item in warehouseController.GetAllWarehouse())
-            {
-                cmbWarehouse.Items.Add(item.Name);
-            }
+            cmbSupplier.DataSource = supplierController.GetAllSupllier();
+            cmbSupplier.DisplayMember = "Name";
+            cmbSupplier.ValueMember = "Id";
+
+            cmbWarehouse.DataSource = warehouseController.GetAllWarehouse();
+            cmbWarehouse.DisplayMember = "Name";
+            cmbWarehouse.ValueMember = "Id";
+
         }
 
 
@@ -142,8 +147,15 @@ namespace Final_Project_DBMS.View
             // Xu ly kiem tra kieu du lieu so
             if (e.ColumnIndex == 3 || e.ColumnIndex == 5)
             {
+
                 var priceCell = dgvDetailOder.Rows[e.RowIndex].Cells[3];
                 var quantityCell = dgvDetailOder.Rows[e.RowIndex].Cells[5];
+
+                if (priceCell.Value == null || quantityCell.Value == null)
+                {
+                    dgvDetailOder.Rows[e.RowIndex].Cells[6].Value = null;
+                }
+
                 // Validate Price nếu người dùng vừa sửa cột 3
                 if (e.ColumnIndex == 3)
                 {
@@ -199,12 +211,12 @@ namespace Final_Project_DBMS.View
 
             }
 
-            if(e.ColumnIndex == 1)
+            if (e.ColumnIndex == 1)
             {
                 if (dgvDetailOder.CurrentCell.Value == null)
                     return;
                 var idProductCell = dgvDetailOder.Rows[e.RowIndex].Cells[1];
-                
+
                 if (!int.TryParse(idProductCell.Value.ToString(), NumberStyles.Integer, CultureInfo.CurrentCulture, out int qtyVal))
                 {
                     MessageBox.Show("Giá trị ở cột Mã SP phải là số nguyên.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -213,7 +225,8 @@ namespace Final_Project_DBMS.View
                 }
                 int idProduct = Int32.Parse(dgvDetailOder.Rows[e.RowIndex].Cells[1].Value.ToString());
                 Product isProduct = allProducts.FirstOrDefault(p => p.Id == idProduct);
-                if (isProduct == null) {
+                if (isProduct == null)
+                {
                     MessageBox.Show("Mã sản phẩm không tồn tại!", "Thông báo");
                     dgvDetailOder.CurrentCell.Value = null;
                     return;
@@ -222,7 +235,7 @@ namespace Final_Project_DBMS.View
                 {
                     if (row.Index == e.RowIndex) break; // bỏ qua dòng hiện tại
                     int idExistProduct = Int32.Parse(row.Cells[1].Value.ToString());
-                    if(idProduct == idExistProduct)
+                    if (idProduct == idExistProduct)
                     {
                         MessageBox.Show("Sản phẩm đã được chọn!", "Thông báo");
                         dgvDetailOder.CurrentCell.Value = null;
@@ -230,7 +243,7 @@ namespace Final_Project_DBMS.View
                     }
 
                 }
-                
+
                 var product = availableProducts.FirstOrDefault(p => p.Id == idProduct);
                 if (product != null)
                 {
@@ -243,8 +256,20 @@ namespace Final_Project_DBMS.View
                     availableProducts.Remove(product);
                 }
             }
+            if (e.ColumnIndex == 6)
+            {
+                decimal total = 0;
+                foreach (DataGridViewRow row in dgvDetailOder.Rows)
+                {
+                    if (row.IsNewRow) continue;
+                    if (row.Cells[6].Value != null)
+                    {
+                        total += decimal.Parse(row.Cells[6].Value.ToString());
+                        txtTotal.Text = total.ToString();
+                    }
+                }
+            }
         }
-
 
 
 
@@ -319,6 +344,9 @@ namespace Final_Project_DBMS.View
             cmbWarehouse.Enabled = true;
             btnSave.Enabled = true;
             btnAdd.Enabled = false;
+            dgvOrderExpect.Enabled = false;
+            cmbSupplier.SelectedIndex = 0;
+            cmbWarehouse.SelectedIndex = 0;
         }
 
         private void dgvDetailOder_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -326,22 +354,22 @@ namespace Final_Project_DBMS.View
 
         }
 
-        private void dgvDetailOder_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            var row = dgvDetailOder.Rows[e.RowIndex];
-            if (row.IsNewRow) return; // bỏ qua dòng ảo
+        //private void dgvDetailOder_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        //{
+        //    var row = dgvDetailOder.Rows[e.RowIndex];
+        //    if (row.IsNewRow) return; // bỏ qua dòng ảo
 
-            // Ví dụ: cột 1 (ID), cột 3 (Price), cột 5 (Quantity) phải có dữ liệu
-            if (row.Cells[1].Value == null || string.IsNullOrWhiteSpace(row.Cells[1].Value.ToString()) ||
-                row.Cells[3].Value == null || string.IsNullOrWhiteSpace(row.Cells[3].Value.ToString()) ||
-                row.Cells[5].Value == null || string.IsNullOrWhiteSpace(row.Cells[5].Value.ToString()))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin trước khi sang dòng mới.",
-                                "Thiếu dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    // Ví dụ: cột 1 (ID), cột 3 (Price), cột 5 (Quantity) phải có dữ liệu
+        //    if (row.Cells[1].Value == null || string.IsNullOrWhiteSpace(row.Cells[1].Value.ToString()) ||
+        //        row.Cells[3].Value == null || string.IsNullOrWhiteSpace(row.Cells[3].Value.ToString()) ||
+        //        row.Cells[5].Value == null || string.IsNullOrWhiteSpace(row.Cells[5].Value.ToString()))
+        //    {
+        //        MessageBox.Show("Vui lòng nhập đầy đủ thông tin trước khi sang dòng mới.",
+        //                        "Thiếu dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                e.Cancel = true; // ngăn không cho rời dòng
-            }
-        }
+        //        e.Cancel = true; // ngăn không cho rời dòng
+        //    }
+        //}
 
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -356,6 +384,52 @@ namespace Final_Project_DBMS.View
             cmbSupplier.Enabled = false;
             cmbWarehouse.Enabled = false;
             btnAdd.Enabled = true;
+            dgvOrderExpect.Enabled = true;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            foreach (DataGridViewRow row in dgvDetailOder.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells[1].Value == null || row.Cells[3].Value == null || row.Cells[5] == null)
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin đơn hàng", "Thông báo");
+                    return;
+                }
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.IdProduct = Int32.Parse(row.Cells[1].Value.ToString());
+                orderDetail.Price = decimal.Parse(row.Cells[3].Value.ToString());
+                orderDetail.Quantity = Int32.Parse(row.Cells[5].Value.ToString());
+                orderDetails.Add(orderDetail);
+            }
+            Order order = new Order();
+            dtpDate.Value = DateTime.Now;
+            order.OrderDate = dtpDate.Value;
+            order.IdStaff = 1;//Int32.Parse(txtIdStaff.Text);
+            order.Warehouse = cmbWarehouse.SelectedValue.ToString();
+            order.Supplier = cmbSupplier.SelectedValue.ToString();
+            
+            orderController.InsertOrderExpect(orderDetails, order);
+            LoadDgvOrderExpect();
+            btnReset_Click(sender, e);
+        }
+
+        private void dgvDetailOder_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            decimal total = 0;
+            int stt = 1;
+            foreach (DataGridViewRow row in dgvDetailOder.Rows)
+            {
+                row.Cells[0].Value = stt++;
+                if (row.IsNewRow) continue;
+                if (row.Cells[6].Value != null)
+                {
+                    total += decimal.Parse(row.Cells[6].Value.ToString());
+                    txtTotal.Text = total.ToString();
+                }
+            }
         }
     }
 }

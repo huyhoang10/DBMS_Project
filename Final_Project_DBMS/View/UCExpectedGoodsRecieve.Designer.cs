@@ -149,6 +149,7 @@
             this.btnSave.Size = new System.Drawing.Size(149, 46);
             this.btnSave.TabIndex = 12;
             this.btnSave.Text = "Lưu";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // cmbWarehouse
             // 
@@ -411,7 +412,7 @@
             this.dgvDetailOder.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvDetailOder.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDetailOder_CellContentClick);
             this.dgvDetailOder.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDetailOder_CellValueChanged);
-            this.dgvDetailOder.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvDetailOder_RowValidating);
+            this.dgvDetailOder.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvDetailOder_UserDeletedRow);
             // 
             // col_Index
             // 
