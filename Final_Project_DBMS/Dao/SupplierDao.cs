@@ -20,7 +20,7 @@ namespace Final_Project_DBMS.Dao
             using(SqlConnection conn = new SqlConnection(connectString))
             {
                 conn.Open();
-                string query = "Select * from NhaCungCap";
+                string query = "Select * from v_NhaCungCap";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader dataReader =  cmd.ExecuteReader();
                 while (dataReader.Read())

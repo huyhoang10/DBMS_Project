@@ -84,7 +84,7 @@ CREATE TABLE SanPham (
     kichthuoc NVARCHAR(100),
     ma_dvt INT,                           -- trạng thái
     mota NVARCHAR(200),
-
+	isDeleted bit default(0),
     CONSTRAINT fk_SP_ThuongHieu  FOREIGN KEY (ma_th)     REFERENCES ThuongHieu(ma),
     CONSTRAINT fk_SP_PhanLoai    FOREIGN KEY (ma_loai)   REFERENCES PhanLoai(ma),
     CONSTRAINT fk_SP_MauSac      FOREIGN KEY (ma_mau)    REFERENCES MauSac(ma),
@@ -372,7 +372,7 @@ select * from DonHangChiTiet
 
 
 --===== CREATE VIEW =====
-
+drop view v_SanPham_Chitiet
 CREATE VIEW v_SanPham_Chitiet
 AS
 SELECT 
@@ -391,7 +391,24 @@ LEFT JOIN PhanLoai pl     ON sp.ma_loai = pl.ma
 LEFT JOIN MauSac ms       ON sp.ma_mau = ms.ma
 LEFT JOIN ChatLieu cl     ON sp.ma_chatlieu = cl.ma
 LEFT JOIN DonViTinh dvt   ON sp.ma_dvt = dvt.ma
+WHERE sp.isDeleted != 1
 go
+
+select * from SanPham
+select * from v_SanPham_Chitiet
+
+
+
+Create view v_NhaCungCap
+as
+Select * from NhaCungCap
+where isDeleted != 1
+
+Create view v_Kho
+as
+Select * from Kho
+where isDeleted != 1
+
 
 drop view v_TonKho_Chitiet
 
@@ -412,6 +429,7 @@ left join Kho k on k.ma = tk.ma_kho
 left join ThuongHieu th on th.ma = sp.ma_th
 left join DonViTinh dvt on dvt.ma = sp.ma_dvt
 left join TrangThai tt on tt.ma = tk.ma_tt
+Where sp.isDeleted != 1 and k.isDeleted != 1
 go
 
 drop view v_TonKho_Chitiet
@@ -520,6 +538,8 @@ begin
 	Delete from NhaCungCap 
 	where ma_ncc = @ma_ncc
 end
+
+exec prc_XoaNhaCC 2
 
 
 create proc prc_InsertKho
@@ -721,11 +741,14 @@ go
 
 select * from dbo.fn_LayKho();
 
+drop function fn_TimNhaCC
 create function fn_TimNhaCC (@key nvarchar(50))
 returns table
 as
-return (select * from NhaCungCap where ten_ncc like '%'+@key+'%');
+return (select * from v_NhaCungCap where ten_ncc like '%'+@key+'%');
 go
+
+
 
 
 create function fn_TimSanPham (@key nvarchar(50))

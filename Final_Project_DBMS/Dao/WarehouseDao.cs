@@ -17,7 +17,7 @@ namespace Final_Project_DBMS.Dao
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "Select * from dbo.fn_LayKho();";
+                string query = "Select * from v_Kho;";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
