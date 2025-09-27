@@ -38,7 +38,8 @@ go
 CREATE TABLE Kho (
     ma int PRIMARY KEY IDENTITY,
     ten NVARCHAR(100) not null,
-    diachi NVARCHAR(200)
+    diachi NVARCHAR(200),
+	isDeleted bit,
 );
 
 
@@ -260,10 +261,11 @@ begin
 
 		if @ma_tt = 1
 		begin
+			-- cap nhap trang thai don hang
 			update DonHang
 			set ma_tt = 2 -- ma_tt=2 hủy đơn hàng
 			where ma_don = @ma_don
-
+			-- ghi lich su
 			insert into LichSu(thoigian,ma_don,ghichu)
 			values(GETDATE(),@ma_don,N'Hủy đơn hàng')
 		end;
@@ -281,7 +283,7 @@ begin
 	end catch
 end
 
-exec prc_HuyDonHangDuKien 6
+exec prc_HuyDonHangDuKien 7
 
 drop procedure prc_ThemDonHangThucTe
 create procedure prc_ThemDonHangThucTe
@@ -429,7 +431,8 @@ left join LoaiDonHang ldh on ldh.ma = dh.ma_loai
 left join NhaCungCap ncc on ncc.ma_ncc = dh.ma_ncc
 left join Kho k on k.ma = dh.ma_kho
 left join TrangThaiDH tt on tt.ma = dh.ma_tt
-where ldh.ma = 1
+where ldh.ma = 1 and ma_tt = 1
+
 
 drop view v_DonHangDuKien
 
@@ -448,7 +451,11 @@ where dh.ma_tt = 1
 
 select * from v_DonHangCanXuLy
 
-
+go
+create view v_LichSu
+as
+select thoigian,ma_don,ghichu from LichSu
+go
 
 
 
@@ -740,6 +747,221 @@ BEGIN
         INSERT (ma_kho, ma_sp, soluong)
         VALUES (source.ma_kho, source.ma_sp, source.soluong);
 END
+
+
+/*
+@ma_sp INT,                 -- Khóa chính của sản phẩm
+    @ten_sp NVARCHAR(100),
+    @ma_th INT,
+    @ma_loai INT,
+    @ma_mau INT,
+    @ma_chatlieu INT,
+    @kichthuoc NVARCHAR(100),
+    @ma_dvt INT,
+    @mota NVARCHAR(200)
+*/
+go
+CREATE TRIGGER trg_ChatLieu
+ON ChatLieu
+AFTER DELETE
+AS
+BEGIN
+    -- Kiểm tra xem có sản phẩm nào đang tham chiếu ChatLieu bị xóa không
+    IF EXISTS (
+        SELECT 1
+        FROM SanPham sp
+        INNER JOIN deleted d ON sp.ma_chatlieu = d.ma
+    )
+    BEGIN
+        RAISERROR(N'Có sản phẩm đang sử dụng chất liệu này, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+GO
+
+
+-- Xóa chất liệu
+drop trigger trg_ChatLieu_Delete
+CREATE TRIGGER trg_ChatLieu_Delete
+ON ChatLieu
+AFTER DELETE
+AS
+BEGIN
+    -- Kiểm tra xem có sản phẩm nào đang tham chiếu ChatLieu bị xóa không
+    IF EXISTS (
+        SELECT 1
+        FROM SanPham sp
+        INNER JOIN deleted d ON sp.ma_chatlieu = d.ma
+    )
+    BEGIN
+        RAISERROR(N'Có sản phẩm đang sử dụng thuộc tính này, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+GO
+
+--Xóa DonViTinh
+drop TRIGGER trg_DonViTinh_Delete
+CREATE TRIGGER trg_DonViTinh_Delete
+ON DonViTinh
+AFTER DELETE
+AS
+BEGIN
+    -- Kiểm tra xem có sản phẩm nào đang tham chiếu ChatLieu bị xóa không
+    IF EXISTS (
+        SELECT 1
+        FROM SanPham sp
+        INNER JOIN deleted d ON sp.ma_dvt = d.ma
+    )
+    BEGIN
+        RAISERROR(N'Có sản phẩm đang sử dụng thuộc tính này, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+GO
+
+drop trigger trg_MauSac_Delete
+CREATE TRIGGER trg_MauSac_Delete
+ON MauSac
+AFTER DELETE
+AS
+BEGIN
+    -- Kiểm tra xem có sản phẩm nào đang tham chiếu ChatLieu bị xóa không
+    IF EXISTS (
+        SELECT 1
+        FROM SanPham sp
+        INNER JOIN deleted d ON sp.ma_mau = d.ma
+    )
+    BEGIN
+        RAISERROR(N'Có sản phẩm đang sử dụng thuộc tính này, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+GO
+
+CREATE TRIGGER trg_PhanLoai_Delete
+ON PhanLoai
+AFTER DELETE
+AS
+BEGIN
+    -- Kiểm tra xem có sản phẩm nào đang tham chiếu ChatLieu bị xóa không
+    IF EXISTS (
+        SELECT 1
+        FROM SanPham sp
+        INNER JOIN deleted d ON sp.ma_loai = d.ma
+    )
+    BEGIN
+        RAISERROR(N'Có sản phẩm đang sử dụng thuộc tính này, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+GO
+
+CREATE TRIGGER trg_ThuongHieu_Delete
+ON ThuongHieu
+AFTER DELETE
+AS
+BEGIN
+    -- Kiểm tra xem có sản phẩm nào đang tham chiếu ChatLieu bị xóa không
+    IF EXISTS (
+        SELECT 1
+        FROM SanPham sp
+        INNER JOIN deleted d ON sp.ma_th = d.ma
+    )
+    BEGIN
+        RAISERROR(N'Có sản phẩm đang sử dụng thuộc tính này, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END
+GO
+
+create trigger trg_Kho_Delete
+on Kho
+instead of Delete
+as 
+begin
+	If exists (select 1 from TonKho
+	left join deleted on TonKho.ma_kho = deleted.ma)
+	begin
+		raiserror(N'Kho không thể xóa vì còn tồn kho',16,1);
+		rollback transaction;
+	end
+	else
+	begin
+		update Kho 
+		set Kho.isDeleted = 1
+		where Kho.ma in(select ma from deleted)
+	end
+end
+
+CREATE TRIGGER trg_NhaCungCap_Delete
+ON NhaCungCap
+INSTEAD OF DELETE
+AS
+BEGIN
+    -- Xóa mềm: chỉ đánh dấu isDeleted = 1 thay vì xóa cứng
+    UPDATE NhaCungCap
+    SET isDeleted = 1
+    WHERE ma_ncc IN (SELECT ma_ncc FROM deleted);
+END
+GO
+
+CREATE TRIGGER trg_SanPham_Delete
+ON SanPham
+INSTEAD OF DELETE
+AS
+BEGIN
+    -- Nếu sản phẩm còn tồn kho với số lượng > 0 thì chặn xóa
+    IF EXISTS (
+        SELECT 1
+        FROM TonKho t
+        INNER JOIN deleted d ON t.ma_sp = d.ma_sp
+        WHERE t.soluong > 0
+    )
+    BEGIN
+        RAISERROR(N'Sản phẩm không thể xóa vì còn số lượng tồn kho', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+    ELSE
+    BEGIN
+        -- Xóa mềm: chỉ update cờ isDeleted = 1
+        UPDATE SanPham
+        SET isDeleted = 1
+        WHERE ma_sp IN (SELECT ma_sp FROM deleted);
+    END
+END
+GO
+
+CREATE TRIGGER trg_TonKho_Delete
+ON TonKho
+INSTEAD OF DELETE
+AS
+BEGIN
+    -- Nếu trong deleted có bản ghi có SoLuong > 0 thì chặn xóa
+    IF EXISTS (
+        SELECT 1
+        FROM deleted d
+        WHERE d.SoLuong > 0
+    )
+    BEGIN
+        RAISERROR(N'Còn sản phẩm trong kho, không thể xóa!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+    ELSE
+    BEGIN
+        -- Thực hiện xóa thật sự
+        DELETE tk
+        FROM TonKho tk
+        INNER JOIN deleted d ON tk.ma_sp = d.ma_sp AND tk.ma_kho = d.ma_kho;
+    END
+END
+GO
+
+
+
+
+
+
 
 
 -- Bảng PhanLoai

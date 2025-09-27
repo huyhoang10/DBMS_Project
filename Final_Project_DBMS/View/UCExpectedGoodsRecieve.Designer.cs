@@ -132,6 +132,7 @@
             this.btnDelete.Size = new System.Drawing.Size(149, 46);
             this.btnDelete.TabIndex = 13;
             this.btnDelete.Text = "Hủy đơn";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnSave
             // 

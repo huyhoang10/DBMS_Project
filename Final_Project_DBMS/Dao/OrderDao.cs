@@ -90,13 +90,13 @@ namespace Final_Project_DBMS.Dao
             return orderDetails;
         }
 
-        public Order FindOderById(int id)
+        public Order FindOrderById(int id)
         {
             Order order = null;
             using (SqlConnection conn = new SqlConnection(connectString))
             {
                 conn.Open();
-                string query = "select * from v_DonHangDuKien where IdOrder = @id";
+                string query = "select * from fn_LayDonHangTheoMa(@id)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -106,9 +106,10 @@ namespace Final_Project_DBMS.Dao
                     order.IdOrder = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                     order.OrderDate = reader.IsDBNull(1) ? DateTime.MinValue : reader.GetDateTime(1);
                     order.IdStaff = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
-                    order.Total = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
+                    order.Total = reader.IsDBNull(3) ? 0 : reader.GetDecimal(3);
                     order.Supplier = reader.IsDBNull(4) ? "" : reader.GetString(4);
                     order.Warehouse = reader.IsDBNull(5) ? "" : reader.GetString(5);
+                    order.Status = reader.IsDBNull(6) ? "" : reader.GetString(5);
                 }
             }
             return order;
@@ -168,6 +169,15 @@ namespace Final_Project_DBMS.Dao
             }
         }
 
+        public void CancelOrderExpect(int id) {
+            using (SqlConnection conn = new SqlConnection(connectString)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("prc_HuyDonHangDuKien",conn);
+                cmd.CommandType=CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ma_don", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
         public void InsertOrderActual(int idOrderPending,List<OrderDetail> orderDetails, Order order)
         {
             using (SqlConnection conn = new SqlConnection(connectString))
@@ -205,6 +215,27 @@ namespace Final_Project_DBMS.Dao
                     throw new Exception("InsertOrderExpect failed: " + ex.Message, ex);
                 }
             }
+        }
+
+        public List<History> GetHistory()
+        {
+            List<History> histories = new List<History>();
+            using (SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                string query = "select * from v_LichSu order by thoigian Desc";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    History history = new History();
+                    history.Time = reader.IsDBNull(0) ? DateTime.MinValue : reader.GetDateTime(0);
+                    history.IdOrder = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
+                    history.Note = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                    histories.Add(history);
+                }
+            }
+            return histories;
         }
 
     }

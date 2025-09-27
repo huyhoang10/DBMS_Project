@@ -34,5 +34,19 @@ namespace Final_Project_DBMS.Controller
         {
             orderDao.InsertOrderActual(idOrderPending,details, order);
         }
+
+        public List<History> GetHistory()
+        {
+            return orderDao.GetHistory();
+        }
+
+        public Order FindOrderById(int id)
+        {
+            return orderDao.FindOrderById(id);
+        }
+
+        public void CanCelOrderExpect(int id) { 
+            orderDao.CancelOrderExpect(id);
+        }
     }
 }

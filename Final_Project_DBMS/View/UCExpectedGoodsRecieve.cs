@@ -306,6 +306,7 @@ namespace Final_Project_DBMS.View
             LoadOrderDetails(order.IdOrder);
             cmbWarehouse.Enabled = false;
             cmbSupplier.Enabled = false;
+            btnDelete.Enabled = true;
 
         }
 
@@ -430,6 +431,14 @@ namespace Final_Project_DBMS.View
                     txtTotal.Text = total.ToString();
                 }
             }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int idOrder = Int32.Parse(txtIdOder.Text.ToString());
+            orderController.CanCelOrderExpect(idOrder);
+            LoadDgvOrderExpect();
+            btnReset_Click(sender, e);
         }
     }
 }

@@ -63,6 +63,7 @@
     <Compile Include="Dao\DBConnect.cs" />
     <Compile Include="Dao\InventoryDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
+    <Compile Include="Model\History.cs" />
     <Compile Include="Model\OrderDetail.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\SupplierDao.cs" />
