@@ -1,5 +1,6 @@
 ﻿using Final_Project_DBMS.Controller;
 using Final_Project_DBMS.Model;
+using Final_Project_DBMS.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Final_Project_DBMS.View
 {
@@ -88,9 +90,25 @@ namespace Final_Project_DBMS.View
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(txtId.Text == "")
+            try
             {
-                MessageBox.Show("Chọn kho để xóa");
+                if (txtId.Text == "")
+                {
+                    MessageBox.Show("Vui lòng chọn thuộc tính cần xóa");
+                    return;
+                }
+                var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa thuộc tính này?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    warehouseController.DeleteWarehouse(Int32.Parse(txtId.Text.ToString()));
+                    MessageBox.Show("Xóa thành công");
+                    LoadDgvWarehouse();
+                    btnReset_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
                 return;
             }
         }

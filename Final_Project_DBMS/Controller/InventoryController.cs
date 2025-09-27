@@ -20,5 +20,9 @@ namespace Final_Project_DBMS.Controller
         {
             return inventoryDao.FindProductInventory(nameProduct,nameWarehouse);
         }
+        public void DeleteProductInventory(int idWarehouse, int idProduct)
+        {
+            inventoryDao.DeleteProductInventory(idWarehouse, idProduct);
+        }
     }
 }

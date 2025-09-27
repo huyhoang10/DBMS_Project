@@ -62,5 +62,16 @@ namespace Final_Project_DBMS.Dao
             return inventories;
         }
 
+        public void DeleteProductInventory(int idWarehouse,int idProduct)
+        {
+            using (SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("exec prc_XoaSPTonKho @ma_kho , @ma_sp", conn);
+                cmd.Parameters.AddWithValue("@ma_sp", idProduct);
+                cmd.Parameters.AddWithValue("@ma_kho", idWarehouse);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

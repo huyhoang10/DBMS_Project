@@ -25,13 +25,14 @@ namespace Final_Project_DBMS.View
 
         public void UCWarehouse_Load(object sender, EventArgs e)
         {
-            LoadCmbWarehouse();
-            LoadDgvInventory();          
+            btnReset_Click(sender, e);
+                     
         }
 
         private void LoadDgvInventory()
         {
             dgvInventory.AutoGenerateColumns = false;
+            dgvInventory.ReadOnly = true;
             dgvInventory.DataSource = inventoryController.GetInventoryByWarehouse(cmbWarehouse.Text);
             
         }
@@ -58,17 +59,54 @@ namespace Final_Project_DBMS.View
 
         private void LoadCmbWarehouse()
         {
-            cmbWarehouse.Items.Clear();
-            List<Warehouse> warehouses = warehouseController.GetAllWarehouse();
-            foreach(var item in warehouses)
-            {
-                cmbWarehouse.Items.Add(item.Name);
-            }
-            cmbWarehouse.SelectedIndex = 0;
+            cmbWarehouse.DataSource = warehouseController.GetAllWarehouse(); 
+            cmbWarehouse.DisplayMember = "Name";
+            cmbWarehouse.ValueMember = "Id";
+
         }
 
         private void cmbWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
+            LoadDgvInventory();
+            txtIdProduct.Text = "";
+        }
+
+        private void dgvInventory_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            txtIdProduct.Text = dgvInventory.CurrentRow.Cells[0].Value.ToString();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int idWarehouse = int.Parse(cmbWarehouse.SelectedValue.ToString());
+            try
+            {
+                if (txtIdProduct.Text == "")
+                {
+                    MessageBox.Show("Vui lòng chọn sản phẩm cần xóa");
+                    return;
+                }
+                int idProduct = Int32.Parse(txtIdProduct.Text.ToString());
+                var confirmResult = MessageBox.Show("Bạn có chắc chắn xóa sản phẩm này ra khỏi kho?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    inventoryController.DeleteProductInventory(idWarehouse,idProduct);
+                    MessageBox.Show("Xóa thành công");
+                    LoadDgvInventory();
+                    btnReset_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+                return;
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            LoadCmbWarehouse();
+            cmbWarehouse.SelectedIndex = 0;
             LoadDgvInventory();
         }
     }

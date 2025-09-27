@@ -128,5 +128,29 @@ namespace Final_Project_DBMS.View
                 btnSave.Enabled = true;
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try {
+                if (txtId.Text == "")
+                {
+                    MessageBox.Show("Vui lòng chọn thuộc tính cần xóa");
+                    return;
+                }
+                var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa thuộc tính này?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    attributesController.DeleteAttributes(Constants.dicAttribute[cmbAttribute.Text.ToString()], Int32.Parse(txtId.Text.ToString()));
+                    MessageBox.Show("Xóa thành công");
+                    LoadDgvAttribute(Constants.dicAttribute[cmbAttribute.Text.ToString()]);
+                    btnReset_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+                return;
+            }
+        }
     }
 }

@@ -94,5 +94,16 @@ namespace Final_Project_DBMS.Dao
                 cmd.ExecuteNonQuery();
             }
         }
+        public void DeleteSupplier(int idSupllier)
+        {
+            using (SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("prc_XoaNhaCC", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ma_ncc", idSupllier);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

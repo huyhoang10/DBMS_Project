@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,18 @@ namespace Final_Project_DBMS.Dao
                 cmd.Parameters.AddWithValue("@nametable", nameAttribute);
                 cmd.Parameters.AddWithValue("@ma", attributes.Id);
                 cmd.Parameters.AddWithValue("@ten", attributes.Name);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteAttribute(string nameAttribute, int id) {
+            using (SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("prc_XoaThuocTinh", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@nametable", nameAttribute);
+                cmd.Parameters.AddWithValue("@ma", id);
                 cmd.ExecuteNonQuery();
             }
         }

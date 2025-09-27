@@ -513,6 +513,13 @@ begin
 end
 go
 
+create proc prc_XoaNhaCC
+	@ma_ncc int
+as
+begin
+	Delete from NhaCungCap 
+	where ma_ncc = @ma_ncc
+end
 
 
 create proc prc_InsertKho
@@ -672,6 +679,17 @@ BEGIN
 END
 GO
 
+Create proc prc_XoaSanPham
+	@ma_sp int
+as
+begin
+	Delete from SanPham
+	Where ma_sp = @ma_sp
+end
+
+select * from SanPham
+exec prc_XoaSanPham 10
+
 go
 create proc prc_XoaSPTonKho
 	@ma_kho int,
@@ -685,6 +703,7 @@ end
 
 select * from dbo.fn_ChitietDonHang(4)
 
+go
 
 
 

@@ -23,7 +23,7 @@ namespace Final_Project_DBMS.View
         public void UCProduct_Load(object sender, EventArgs e)
         {
             btnEdit.Enabled = false;
-            LoadDgvProduct();
+            btnReset_Click(sender, e);
         }
 
         private void LoadDgvProduct()
@@ -54,7 +54,27 @@ namespace Final_Project_DBMS.View
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (txtidProduct.Text == "")
+                {
+                    MessageBox.Show("Vui lòng chọn sản phẩm cần xóa");
+                    return;
+                }
+                var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa sản phẩm này?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    productController.DeleteProduct(Int32.Parse(txtidProduct.Text.ToString()));
+                    MessageBox.Show("Xóa thành công");
+                    LoadDgvProduct();
+                    btnReset_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+                return;
+            }
         }
 
         private void btnSearch_Click_1(object sender, EventArgs e)
@@ -68,8 +88,18 @@ namespace Final_Project_DBMS.View
             {
                 int id = Int32.Parse(dgvProduct.CurrentRow.Cells[0].Value.ToString());
                 Constants.choosedProduct = productController.GetProductById(id);
+                txtidProduct.Text = id.ToString();
             }
             btnEdit.Enabled = true;
+
+
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            txtidProduct.Text = "";
+            txtSearch.Text = "";
+            LoadDgvProduct();
         }
     }
 }

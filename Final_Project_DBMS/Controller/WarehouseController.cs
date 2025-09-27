@@ -25,5 +25,9 @@ namespace Final_Project_DBMS.Controller
         {
             warehouseDao.UpdateWarehouse(warehouse);
         }
+        public void DeleteWarehouse(int id)
+        {
+            warehouseDao.DeleteWarehouse(id);
+        }
     }
 }

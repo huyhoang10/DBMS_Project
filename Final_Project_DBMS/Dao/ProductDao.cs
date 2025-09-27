@@ -138,5 +138,17 @@ namespace Final_Project_DBMS.Dao
 
             }
         }
+
+        public void DeleteProduct(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("prc_XoaSanPham", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ma_sp", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

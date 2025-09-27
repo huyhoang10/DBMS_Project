@@ -32,5 +32,10 @@ namespace Final_Project_DBMS.Controller
                 supplierDao.UpdateSupplier(supplier);
             }
         }
+
+        public void DeleteSupplier(int id)
+        {
+            supplierDao.DeleteSupplier(id);
+        }
     }
 }

@@ -17,7 +17,6 @@ namespace Final_Project_DBMS.Utils
             {"Màu sắc","MauSac" },
             {"Chất liệu","ChatLieu" },
             {"Đơn vị tính","DonViTinh" },
-            {"Trạng thái","TrangThai" }
         };
 
         public static Dictionary<String, int> dicBrand = new Dictionary<String, int>() {
@@ -32,9 +31,6 @@ namespace Final_Project_DBMS.Utils
         {
         };
         public static Dictionary<String, int> dicUnit = new Dictionary<String, int>()
-        {
-        };
-        public static Dictionary<String, int> dicStatus = new Dictionary<String, int>()
         {
         };
 

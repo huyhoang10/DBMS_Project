@@ -48,6 +48,8 @@
             this.btnSearch = new Guna.UI2.WinForms.Guna2Button();
             this.txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.txtidProduct = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnReset = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProduct)).BeginInit();
             this.SuspendLayout();
             // 
@@ -290,10 +292,48 @@
             this.guna2HtmlLabel1.TabIndex = 31;
             this.guna2HtmlLabel1.Text = "Sản Phẩm";
             // 
+            // txtidProduct
+            // 
+            this.txtidProduct.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtidProduct.DefaultText = "";
+            this.txtidProduct.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtidProduct.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtidProduct.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtidProduct.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtidProduct.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtidProduct.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtidProduct.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtidProduct.Location = new System.Drawing.Point(710, 941);
+            this.txtidProduct.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtidProduct.Name = "txtidProduct";
+            this.txtidProduct.PlaceholderText = "";
+            this.txtidProduct.SelectedText = "";
+            this.txtidProduct.Size = new System.Drawing.Size(229, 48);
+            this.txtidProduct.TabIndex = 32;
+            // 
+            // btnReset
+            // 
+            this.btnReset.BorderRadius = 5;
+            this.btnReset.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnReset.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnReset.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnReset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnReset.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
+            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.Location = new System.Drawing.Point(1031, 941);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(150, 50);
+            this.btnReset.TabIndex = 33;
+            this.btnReset.Text = "Hủy";
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // UCProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.txtidProduct);
             this.Controls.Add(this.guna2HtmlLabel1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
@@ -328,5 +368,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_size;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_unit;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_description;
+        private Guna.UI2.WinForms.Guna2TextBox txtidProduct;
+        private Guna.UI2.WinForms.Guna2Button btnReset;
     }
 }

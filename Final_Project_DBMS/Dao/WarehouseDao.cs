@@ -60,5 +60,17 @@ namespace Final_Project_DBMS.Dao
             }
         }
 
+        public void DeleteWarehouse(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("prc_XoaKho", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ma", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
     }
 }

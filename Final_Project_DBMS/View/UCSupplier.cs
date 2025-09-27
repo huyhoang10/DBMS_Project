@@ -78,7 +78,7 @@ namespace Final_Project_DBMS.View
             btnSave.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = true;
-
+            LoadDgvSupllier();
             ReadOnlyTxt();
         }
 
@@ -117,6 +117,30 @@ namespace Final_Project_DBMS.View
         private void btnSearch_Click(object sender, EventArgs e)
         {
             dgvSupplier.DataSource = supplierController.FindSupplier(txtSearch.Text);
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtId.Text == "")
+                {
+                    MessageBox.Show("Vui lòng chọn nhà cung cấp cần xóa");
+                    return;
+                }
+                var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa nhà cung cấp này?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    supplierController.DeleteSupplier(Int32.Parse(txtId.Text.ToString()));
+                    MessageBox.Show("Xóa thành công");
+                    btnReset_Click(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+                return;
+            }
         }
     }
 }

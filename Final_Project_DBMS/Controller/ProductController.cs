@@ -33,5 +33,9 @@ namespace Final_Project_DBMS.Controller
         {
             productDao.UpdateProduct(product);
         }
+        public void DeleteProduct(int id)
+        {
+            productDao.DeleteProduct(id);
+        }
     }
 }

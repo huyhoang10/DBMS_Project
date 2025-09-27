@@ -22,5 +22,9 @@ namespace Final_Project_DBMS.Controller
         {
             attributeDao.UpdateAttribute(nameAttribute, attributes);
         }
+        public void DeleteAttributes(string nameAttribute,int id)
+        {
+            attributeDao.DeleteAttribute(nameAttribute,id);
+        }
     }
 }
