@@ -826,6 +826,122 @@ go
 drop function fn_LayDonHangTheoMa
 
 select * from fn_LayDonHangTheoMa(1)
+go
+create function fn_TienNhapHangCacThangTheoNam (@nam int)
+returns table
+as
+	return (Select Thang,TongTienNhap FROM v_TongTienNhapTheoThang
+	WHERE Nam = @nam)
+go
+
+select * from fn_TienNhapHangCacThangTheoNam(2025);
+------------Function Thống Kê -----------------
+-- Số tiền nhập hang của từng tháng, từng năm
+GO
+drop view v_TongTienNhapTheoThang
+CREATE OR ALTER VIEW v_TongTienNhapTheoThang
+AS
+SELECT 
+    YEAR(ngaylap) AS Nam,
+    MONTH(ngaylap) AS Thang,
+    SUM(tongtien) AS TongTienNhap
+FROM DonHang
+WHERE ma_loai = 2
+GROUP BY YEAR(ngaylap), MONTH(ngaylap);
+GO
+
+SELECT * FROM v_TongTienNhapTheoThang ORDER BY Nam, Thang;
+
+-- Số tiền nhập thực tế trong tháng
+GO
+CREATE FUNCTION fn_TongTienNhap_ThangNay()
+RETURNS DECIMAL(18,0)
+AS
+BEGIN
+    DECLARE @TongTien DECIMAL(18,0);
+
+    SELECT @TongTien = ISNULL(SUM(tongtien), 0)
+    FROM DonHang
+    WHERE ma_loai = 2
+      AND YEAR(ngaylap) = YEAR(GETDATE())
+      AND MONTH(ngaylap) = MONTH(GETDATE());
+
+    RETURN @TongTien;
+END;
+GO
+
+SELECT dbo.fn_TongTienNhap_ThangNay() AS TongTienThangNay;
+
+-- Số tiền nhập thực tế trong tuần này
+Go
+CREATE FUNCTION fn_TongTienNhap_TuanNay()
+RETURNS DECIMAL(18,0)
+AS
+BEGIN
+    DECLARE @TongTien DECIMAL(18,0);
+    DECLARE @StartOfWeek DATE = DATEADD(DAY, 1 - DATEPART(WEEKDAY, GETDATE()), CAST(GETDATE() AS DATE));
+    DECLARE @EndOfWeek DATE = GETDATE();
+
+    SELECT @TongTien = ISNULL(SUM(tongtien), 0)
+    FROM DonHang
+    WHERE ma_loai = 2
+      AND ngaylap BETWEEN @StartOfWeek AND @EndOfWeek;
+
+    RETURN @TongTien;
+END;
+GO
+
+SELECT dbo.fn_TongTienNhap_TuanNay() AS TongTienTuanNay;
+
+-- Giá trị đơn hàng trong tháng này của mỗi kho
+DROP VIEW v_TongTienNhapTheoKho_ThangNay
+GO
+CREATE VIEW v_TongTienNhapTheoKho_ThangNay
+AS
+SELECT 
+    k.ten,
+    SUM(dh.tongtien) AS TongTienNhap
+FROM DonHang dh
+JOIN Kho k ON dh.ma_kho = k.ma
+WHERE dh.ma_loai = 2
+  AND YEAR(dh.ngaylap) = YEAR(GETDATE())
+  AND MONTH(dh.ngaylap) = MONTH(GETDATE())
+GROUP BY k.ten;
+GO
+
+SELECT * FROM v_TongTienNhapTheoKho_ThangNay;
+
+
+-- Số tiền nhập hàng thực tế của mỗi nhà cung cấp trong tháng này
+DROP VIEW vw_TongTienNhapTheoNCC_ThangNay
+GO
+CREATE VIEW v_TongTienNhapTheoNCC_ThangNay
+AS
+SELECT 
+    ncc.ten_ncc,
+    SUM(dh.tongtien) AS TongTienNhap
+FROM DonHang dh
+JOIN NhaCungCap ncc ON dh.ma_ncc = ncc.ma_ncc
+WHERE dh.ma_loai = 2
+  AND YEAR(dh.ngaylap) = YEAR(GETDATE())
+  AND MONTH(dh.ngaylap) = MONTH(GETDATE())
+GROUP BY ncc.ten_ncc;
+GO
+
+SELECT * FROM v_TongTienNhapTheoNCC_ThangNay;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -------------Trigger------------------
 CREATE TRIGGER trg_TonKho_Insert
