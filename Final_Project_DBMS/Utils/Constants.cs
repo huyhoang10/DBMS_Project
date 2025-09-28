@@ -9,6 +9,7 @@ namespace Final_Project_DBMS.Utils
 {
     internal static class Constants
     {
+        public static Staff staffLogin;
         public static Product choosedProduct = new Product();
 
         public static Dictionary<String,String> dicAttribute = new Dictionary<String, String>() {

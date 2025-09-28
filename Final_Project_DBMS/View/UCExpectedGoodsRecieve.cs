@@ -12,6 +12,7 @@ using Final_Project_DBMS.Model;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using Final_Project_DBMS.Dao;
 using System.Globalization;
+using Final_Project_DBMS.Utils;
 
 namespace Final_Project_DBMS.View
 {
@@ -42,8 +43,7 @@ namespace Final_Project_DBMS.View
 
             btnReset_Click(sender, e);
 
-            LoadDgvOrderExpect();
-            LoadCmb();
+            txtIdStaff.Text = Constants.staffLogin.IdStaff.ToString();
 
             txtIdStaff.Enabled = false;
             txtIdOder.Enabled = false;
@@ -88,7 +88,6 @@ namespace Final_Project_DBMS.View
             cmbWarehouse.DataSource = warehouseController.GetAllWarehouse();
             cmbWarehouse.DisplayMember = "Name";
             cmbWarehouse.ValueMember = "Id";
-
         }
 
 
@@ -377,8 +376,9 @@ namespace Final_Project_DBMS.View
             dgvDetailOder.Rows.Clear();
             dgvDetailOder.Enabled = false;
             txtIdOder.Text = "";
-            txtIdStaff.Text = "";
             txtTotal.Text = "";
+            txtIdOder.Enabled = false;
+            txtIdStaff.Enabled = false;
             dtpDate.Value = DateTime.Now;
             btnSave.Enabled = false;
             btnDelete.Enabled = false;
@@ -386,6 +386,8 @@ namespace Final_Project_DBMS.View
             cmbWarehouse.Enabled = false;
             btnAdd.Enabled = true;
             dgvOrderExpect.Enabled = true;
+            LoadDgvOrderExpect();
+            LoadCmb();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -408,7 +410,7 @@ namespace Final_Project_DBMS.View
             Order order = new Order();
             dtpDate.Value = DateTime.Now;
             order.OrderDate = dtpDate.Value;
-            order.IdStaff = 1;//Int32.Parse(txtIdStaff.Text);
+            order.IdStaff = Int32.Parse(txtIdStaff.Text);
             order.Warehouse = cmbWarehouse.SelectedValue.ToString();
             order.Supplier = cmbSupplier.SelectedValue.ToString();
             
@@ -435,10 +437,21 @@ namespace Final_Project_DBMS.View
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            int idOrder = Int32.Parse(txtIdOder.Text.ToString());
-            orderController.CanCelOrderExpect(idOrder);
-            LoadDgvOrderExpect();
-            btnReset_Click(sender, e);
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc muốn hủy đơn hàng này?",
+                "Cảnh báo",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                int idOrder = Int32.Parse(txtIdOder.Text.Trim());
+                orderController.CanCelOrderExpect(idOrder);
+                LoadDgvOrderExpect();
+                btnReset_Click(sender, e);
+            }
         }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Final_Project_DBMS.Model;
 using Final_Project_DBMS.Dao;
+using System.Windows.Forms;
 
 namespace Final_Project_DBMS.Controller
 {
@@ -26,10 +27,12 @@ namespace Final_Project_DBMS.Controller
             if(supplier.Id == 0)
             {
                 supplierDao.InsertSupplier(supplier);
+                MessageBox.Show("Thêm nhà cung cấp thành công.", "Thông báo");
             }
             else
             {
                 supplierDao.UpdateSupplier(supplier);
+                MessageBox.Show("Chỉnh sửa nhà cung cấp thành công.", "Thông báo");
             }
         }
 

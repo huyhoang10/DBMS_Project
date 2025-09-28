@@ -34,6 +34,12 @@ namespace Final_Project_DBMS.View
         public void UCHistory_Load(object sender, EventArgs e)
         {
             dgvHistory.DataSource = orderController.GetHistory();
+            txtDescription.Enabled = false;
+            txtId.Enabled = false;
+            txtStaff.Enabled = false;
+            txtSupplier.Enabled = false;
+            txtWarehouse.Enabled = false;
+            txtTotalPrice.Enabled = false;
         }
 
         private void dgvHistory_CellClick(object sender, DataGridViewCellEventArgs e)

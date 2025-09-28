@@ -23,8 +23,7 @@ namespace Final_Project_DBMS.View
         public void UCSupplier_Load(object sender, EventArgs e)
         {
             ReadOnlyTxt();
-            btnSave.Enabled = false;
-            btnDelete.Enabled = false;
+            btnReset_Click(sender, e);
             LoadDgvSupllier();
         }
 
@@ -52,19 +51,19 @@ namespace Final_Project_DBMS.View
 
         private void EnableTxt()
         {
-            txtName.ReadOnly = false;
-            txtContact.ReadOnly = false;
-            txtAddress.ReadOnly = false;
-            txtNote.ReadOnly = false;
+            txtName.Enabled = true;
+            txtAddress.Enabled = true;
+            txtContact.Enabled = true;
+            txtNote.Enabled = true;
         }
 
         private void ReadOnlyTxt()
         {
-            txtId.ReadOnly = true;
-            txtName.ReadOnly = true;
-            txtContact.ReadOnly = true;
-            txtAddress.ReadOnly = true;
-            txtNote.ReadOnly = true;
+            txtName.Enabled = false;
+            txtId.Enabled = false;
+            txtAddress.Enabled = false;
+            txtContact.Enabled = false;
+            txtNote.Enabled = false;
 
         }
 
@@ -75,6 +74,7 @@ namespace Final_Project_DBMS.View
             txtContact.Clear();
             txtAddress.Clear();
             txtNote.Clear();
+            
             btnSave.Enabled = false;
             btnDelete.Enabled = false;
             btnAdd.Enabled = true;

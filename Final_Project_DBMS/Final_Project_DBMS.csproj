@@ -58,6 +58,7 @@
     <Compile Include="Controller\InventoryController.cs" />
     <Compile Include="Controller\OrderController.cs" />
     <Compile Include="Controller\ProductController.cs" />
+    <Compile Include="Controller\StaffController.cs" />
     <Compile Include="Controller\SupplierController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Controller\WarehouseController.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Dao\DBConnect.cs" />
     <Compile Include="Dao\InventoryDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
+    <Compile Include="Dao\StaffDao.cs" />
     <Compile Include="Model\History.cs" />
     <Compile Include="Model\OrderDetail.cs" />
     <Compile Include="Dao\ProductDao.cs" />

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Final_Project_DBMS.Controller;
+using Final_Project_DBMS.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +14,7 @@ namespace Final_Project_DBMS.View
 {
     public partial class UCStaff : UserControl
     {
+        StaffController staffController = new StaffController();
         public UCStaff()
         {
             InitializeComponent();
@@ -24,7 +27,67 @@ namespace Final_Project_DBMS.View
 
         public void UCStaff_Load(object sender, EventArgs e)
         {
+            btnReset_Click(sender, e);
+            txtIdStaff.Enabled = false;
+            txtIdUser.Enabled = false;
+        }
 
+        private void LoadDgv() { 
+            dgvStaff.DataSource = staffController.GetAllStaff();
+            
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (txtName.Text == "" || txtCccd.Text == "" || txtUserName.Text == "" 
+                || txtPassword.Text == "" || cmbSex.SelectedItem == null || cmbRoleId.SelectedItem == null)
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
+                return;
+            }
+            else
+            {
+                try
+                {
+                    Staff staff = new Staff();
+                    staff.NameStaff = txtName.Text;
+                    staff.Cccd = txtCccd.Text;
+                    staff.BirthDay = dtpBirthday.Value;
+                    staff.Sex = cmbSex.SelectedItem.ToString();
+                    staff.UserName = txtUserName.Text;
+                    staff.Password = txtPassword.Text;
+                    staff.IdRole = int.Parse(cmbRoleId.SelectedItem.ToString());
+                    staffController.AddStaff(staff);
+                    MessageBox.Show("Thêm nhân viên thành công");
+                    btnReset_Click(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message);
+                }
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            txtIdStaff.Text = "";
+            txtIdUser.Text = "";
+            txtName.Text = "";
+            txtCccd.Text = "";
+            txtPassword.Text = "";
+            txtUserName.Text = "";
+            
+            //txtCccd.Enabled = false;
+            //txtName.Enabled = false;
+            //txtUserName.Enabled = false;
+            //txtPassword.Enabled = false;
+            //cmbRoleId.Enabled = false;
+            //cmbSex.Enabled = false;
+            cmbRoleId.SelectedItem = null;
+            cmbSex.SelectedItem = null;
+            dtpBirthday.Value = DateTime.Now;
+            txtName.Text = "";
+            LoadDgv();
         }
     }
 }

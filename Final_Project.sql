@@ -1,13 +1,12 @@
-﻿use NhapHang
+﻿use QLNhapHang
+go
 
-EXECUTE AS USER = 'ql_01';
-CREATE USER ql_01 FOR LOGIN ql_01;
-SELECT * FROM SanPham;
-SELECT name, type_desc FROM sys.database_principals WHERE name = 'ql_01';
-SELECT name, type_desc FROM sys.server_principals WHERE name = 'nvkho_01';
+/*
+DROP ROLE	role_QuanLy;
 CREATE ROLE	role_QuanLy;
-GRANT CONTROL ON DATABASE::NhapHang TO role_QuanLy;
+GRANT CONTROL ON DATABASE::QLNhapHang TO role_QuanLy;
 
+DROP ROLE role_NvKho;
 CREATE ROLE role_NvKho;
 GRANT  EXEC ON dbo.prc_ThemDonHangThucTe TO role_NvKho;
 
@@ -23,8 +22,7 @@ JOIN sys.database_principals dp ON p.grantee_principal_id = dp.principal_id
 LEFT JOIN sys.objects o ON p.major_id = o.object_id
 WHERE dp.name = 'role_NvKho'
 ORDER BY ObjectName, Permission;
-
-
+*/
 
 
 --===== CREATE TABLE =====
@@ -54,7 +52,8 @@ CREATE TABLE NhaCungCap (
     ten_ncc NVARCHAR(100) NOT NULL,
     diachi NVARCHAR(200) NOT NULL,
     lienhe NVARCHAR(50) NOT NULL,
-    ghichu NVARCHAR(500)
+    ghichu NVARCHAR(500),
+	isDeleted BIT DEFAULT(0)
 );
 GO
 
@@ -145,11 +144,13 @@ CREATE TABLE LoaiDonHang (
 );
 GO
 
+/*
 INSERT INTO LoaiDonHang (ten)
 VALUES
     (N'Đơn hàng dự kiến'),
     (N'Đơn hàng thực tế');
 GO
+*/
 
 CREATE TABLE TrangThaiDH (
     ma INT PRIMARY KEY IDENTITY,
@@ -249,6 +250,7 @@ BEGIN
         THROW; -- Báo lỗi ra ngoài cho C# biết
     END CATCH
 END
+GO
 
 CREATE PROCEDURE prc_HuyDonHangDuKien
     @ma_don INT
@@ -444,13 +446,28 @@ WHERE sp.isDeleted != 1
   AND k.isDeleted != 1;
 GO
 
-SELECT * 
-FROM v_SanPham_Chitiet;
-
-
 --========================================
 --=         VIEW: Đơn hàng dự kiến        =
 --========================================
+
+CREATE VIEW v_NhanVienChiTiet
+AS
+SELECT 
+    nv.ma_nv, 
+    nv.hoten, 
+    nv.cccd, 
+    nv.ngaysinh, 
+    nv.gioitinh, 
+    u.ma_tk, 
+    u.username, 
+    u.[password], 
+    u.roleId
+FROM NhanVien nv
+LEFT JOIN [User] u 
+    ON nv.ma_nv = u.ma_nv;
+
+
+Go
 CREATE VIEW v_DonHangDuKien 
 AS
 SELECT 
@@ -504,6 +521,46 @@ SELECT
     ma_don,
     ghichu
 FROM LichSu;
+GO
+
+-- Thống kê
+CREATE OR ALTER VIEW v_TongTienNhapTheoThang
+AS
+SELECT 
+    YEAR(ngaylap) AS Nam,
+    MONTH(ngaylap) AS Thang,
+    SUM(tongtien) AS TongTienNhap
+FROM DonHang
+WHERE ma_loai = 2
+GROUP BY YEAR(ngaylap), MONTH(ngaylap);
+GO
+
+--Số tiền nhập kho trong tháng này
+CREATE VIEW v_TongTienNhapTheoKho_ThangNay
+AS
+SELECT 
+    k.ten,
+    SUM(dh.tongtien) AS TongTienNhap
+FROM DonHang dh
+JOIN Kho k ON dh.ma_kho = k.ma
+WHERE dh.ma_loai = 2
+  AND YEAR(dh.ngaylap) = YEAR(GETDATE())
+  AND MONTH(dh.ngaylap) = MONTH(GETDATE())
+GROUP BY k.ten;
+GO
+
+-- Số tiền nhập hàng thực tế của mỗi nhà cung cấp trong tháng này
+CREATE VIEW v_TongTienNhapTheoNCC_ThangNay
+AS
+SELECT 
+    ncc.ten_ncc,
+    SUM(dh.tongtien) AS TongTienNhap
+FROM DonHang dh
+JOIN NhaCungCap ncc ON dh.ma_ncc = ncc.ma_ncc
+WHERE dh.ma_loai = 2
+  AND YEAR(dh.ngaylap) = YEAR(GETDATE())
+  AND MONTH(dh.ngaylap) = MONTH(GETDATE())
+GROUP BY ncc.ten_ncc;
 GO
 
 --===== CREATE PROC =====
@@ -798,8 +855,6 @@ BEGIN
 END
 GO
 
-drop PROCEDURE prc_ThemNhanVienVaTaiKhoan
-GO
 CREATE PROCEDURE prc_ThemNhanVienVaTaiKhoan_NvKho
     @HoTen NVARCHAR(100),
     @CCCD VARCHAR(12),
@@ -908,27 +963,6 @@ BEGIN
 END
 GO
 
-EXEC prc_ThemNhanVienVaTaiKhoan_NvKho
-    @HoTen = N'Nguyễn Văn A',
-    @CCCD = '111222333444',
-    @GioiTinh = N'Nam',
-    @NgaySinh = '1990-05-10',
-    @Tuoi = 35,
-    @TenDangNhap = N'nvkho_01',
-    @MatKhau = N'12345',
-    @RoleId = 2; -- mã role tương ứng role_NvKho
-
-EXEC prc_ThemNhanVienVaTaiKhoan_QuanLy
-    @HoTen = N'Nguyễn Thị B',
-    @CCCD = '111222333555',
-    @GioiTinh = N'Nữ',
-    @NgaySinh = '1991-05-10',
-    @Tuoi = 34,
-    @TenDangNhap = N'ql_01',
-    @MatKhau = N'12345',
-    @RoleId = 1; -- mã role tương ứng role_NvKho
-
-
 --===== CREATE FUNC =====
 --===== TẠO HÀM: LẤY DANH SÁCH KHO =====
 CREATE FUNCTION fn_LayKho()
@@ -1008,9 +1042,6 @@ AS
     );
 GO
 
-DROP FUNCTION fn_TimSPTrongTonKho;
-GO
-
 --===== HÀM: CHI TIẾT ĐƠN HÀNG =====
 CREATE FUNCTION fn_ChitietDonHang (
     @madon INT
@@ -1086,16 +1117,7 @@ GO
 ------------Thống Kê -----------------
 -- Số tiền nhập hang của từng tháng, từng năm
 
-CREATE OR ALTER VIEW v_TongTienNhapTheoThang
-AS
-SELECT 
-    YEAR(ngaylap) AS Nam,
-    MONTH(ngaylap) AS Thang,
-    SUM(tongtien) AS TongTienNhap
-FROM DonHang
-WHERE ma_loai = 2
-GROUP BY YEAR(ngaylap), MONTH(ngaylap);
-GO
+
 
 -- Số tiền nhập thực tế trong tháng
 CREATE FUNCTION fn_TongTienNhap_ThangNay()
@@ -1132,33 +1154,22 @@ BEGIN
 END;
 GO
 
--- Giá trị đơn hàng trong tháng này của mỗi kho
-CREATE VIEW v_TongTienNhapTheoKho_ThangNay
+CREATE FUNCTION fn_TimNhanVienTheoTenTaiKhoan (
+    @username NVARCHAR(200)
+)
+RETURNS TABLE
 AS
-SELECT 
-    k.ten,
-    SUM(dh.tongtien) AS TongTienNhap
-FROM DonHang dh
-JOIN Kho k ON dh.ma_kho = k.ma
-WHERE dh.ma_loai = 2
-  AND YEAR(dh.ngaylap) = YEAR(GETDATE())
-  AND MONTH(dh.ngaylap) = MONTH(GETDATE())
-GROUP BY k.ten;
+RETURN
+(
+    SELECT *
+    FROM v_NhanVienChiTiet
+    WHERE username = @username
+);
 GO
 
--- Số tiền nhập hàng thực tế của mỗi nhà cung cấp trong tháng này
-CREATE VIEW v_TongTienNhapTheoNCC_ThangNay
-AS
-SELECT 
-    ncc.ten_ncc,
-    SUM(dh.tongtien) AS TongTienNhap
-FROM DonHang dh
-JOIN NhaCungCap ncc ON dh.ma_ncc = ncc.ma_ncc
-WHERE dh.ma_loai = 2
-  AND YEAR(dh.ngaylap) = YEAR(GETDATE())
-  AND MONTH(dh.ngaylap) = MONTH(GETDATE())
-GROUP BY ncc.ten_ncc;
-GO
+
+
+
 
 -------------Trigger------------------
 CREATE TRIGGER trg_TonKho_Insert
@@ -1179,12 +1190,13 @@ BEGIN
 END
 GO
 
+
 CREATE TRIGGER trg_TrangThaiTonKho_Insert
 ON TonKho
 AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    -- Cập nhật trạng thái tồn kho sau khi có thay đổi
+    -- Xử lý khi INSERT hoặc UPDATE
     UPDATE tk
     SET ma_tt = 
         CASE 
@@ -1194,11 +1206,26 @@ BEGIN
             ELSE 4
         END
     FROM TonKho tk
-    INNER JOIN inserted i 
-        ON tk.ma_kho = i.ma_kho 
+    INNER JOIN inserted i
+        ON tk.ma_kho = i.ma_kho
        AND tk.ma_sp = i.ma_sp;
+
+    -- Xử lý khi DELETE
+    UPDATE tk
+    SET ma_tt = 
+        CASE 
+            WHEN tk.soluong = 0 THEN 1
+            WHEN tk.soluong < 5 THEN 2
+            WHEN tk.soluong < 20 THEN 3
+            ELSE 4
+        END
+    FROM TonKho tk
+    INNER JOIN deleted d
+        ON tk.ma_kho = d.ma_kho
+       AND tk.ma_sp = d.ma_sp;
 END
 GO
+
 
 CREATE TRIGGER trg_ChatLieu
 ON ChatLieu
@@ -1246,8 +1273,6 @@ END
 GO
 
 -- MauSac
-DROP TRIGGER IF EXISTS trg_MauSac_Delete;
-GO
 CREATE TRIGGER trg_MauSac_Delete
 ON MauSac
 INSTEAD OF DELETE
@@ -1270,8 +1295,6 @@ END
 GO
 
 -- PhanLoai
-DROP TRIGGER IF EXISTS trg_PhanLoai_Delete;
-GO
 CREATE TRIGGER trg_PhanLoai_Delete
 ON PhanLoai
 INSTEAD OF DELETE

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Final_Project_DBMS.Model;
 using System.Globalization;
 using Final_Project_DBMS.Dao;
+using Final_Project_DBMS.Utils;
 
 namespace Final_Project_DBMS.View
 {
@@ -315,6 +316,10 @@ namespace Final_Project_DBMS.View
             dtpDate.Value = DateTime.Now;
             dtpDate.Enabled = false;
             dgvOrderExpect.Enabled = true;
+            txtStaff.Enabled = false;
+            txtIdOrderPending.Enabled = false;
+            txtDescription.Enabled = false;
+            txtStaff.Text = Constants.staffLogin.IdStaff.ToString();
 
         }
 

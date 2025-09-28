@@ -39,7 +39,10 @@ namespace Final_Project_DBMS.View
             txtAddress.Text = "";
             txtId.Text = "";
             txtName.Text = "";
+            txtAddress.Enabled = true;
+            txtName.Enabled = true;
             btnAdd.Enabled = false;
+            btnSave.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -55,6 +58,7 @@ namespace Final_Project_DBMS.View
                 warehouse.Name = txtName.Text;
                 warehouse.Address = txtAddress.Text;
                 warehouseController.InsertWarehouse(warehouse);
+                MessageBox.Show("Thêm nhà kho thành công.", "Thông báo");
                 LoadDgvWarehouse();
             }
             else
@@ -63,6 +67,7 @@ namespace Final_Project_DBMS.View
                 warehouse.Name = txtName.Text;
                 warehouse.Address = txtAddress.Text;
                 warehouseController.UpdateWarehouse(warehouse);
+                MessageBox.Show("Cập nhật nhà kho thành công.", "Thông báo");
                 LoadDgvWarehouse();
             }
             btnReset_Click(sender,e);
@@ -75,6 +80,9 @@ namespace Final_Project_DBMS.View
                 txtId.Text = dgvWarehouse.CurrentRow.Cells[0].Value.ToString();
                 txtName.Text = dgvWarehouse.CurrentRow.Cells[1].Value.ToString();
                 txtAddress.Text = dgvWarehouse.CurrentRow.Cells[2].Value.ToString();
+                txtName.Enabled = true;
+                txtAddress.Enabled = true;
+                btnDelete.Enabled = true;
                 btnSave.Enabled = true;
             }
         }
@@ -82,10 +90,15 @@ namespace Final_Project_DBMS.View
         private void btnReset_Click(object sender, EventArgs e)
         {
             txtAddress.Text = "";
+            txtAddress.Enabled = false;
             txtId.Text = "";
+            txtId.Enabled = false;
             txtName.Text = "";
+            txtName.Enabled = false;
             btnAdd.Enabled = true;
             btnSave.Enabled = false;
+            btnDelete.Enabled = false;
+            LoadDgvWarehouse();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

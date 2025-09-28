@@ -23,6 +23,7 @@ namespace Final_Project_DBMS
         {
             ChooseBtn(btnSupplier);
             ucSupplier1.BringToFront();
+            ucSupplier1.UCSupplier_Load(sender, e);
         }
 
 
@@ -30,23 +31,27 @@ namespace Final_Project_DBMS
         {
             ChooseBtn(btnStocking);
             ucStocking1.BringToFront();
+            ucStocking1.UCStocking_Load(sender, e);
         }
 
         private void btnHistory_Click(object sender, EventArgs e)
         {
             ChooseBtn(btnHistory);
             ucHistory1.BringToFront();
+            ucHistory1.UCHistory_Load(sender, e);
         }
 
         private void btnExpectOrder_Click(object sender, EventArgs e)
         {
             ChooseBtn(btnExpectOrder);
             ucExpectedGoodsRecieve1.BringToFront();
+            ucExpectedGoodsRecieve1.UCExpectedGoodsRecieve_Load(sender, e);
         }
 
         private void FManagement_Load(object sender, EventArgs e)
         {
             btnHome_Click(sender, e);
+
         }
 
 
@@ -67,12 +72,14 @@ namespace Final_Project_DBMS
 
         private void btnWarehouse_Click(object sender, EventArgs e)
         {
+            ucWarehouse1.UCWarehouse_Load(sender, e);
             ucWarehouse1.BringToFront();
             ChooseBtn(btnWarehouse);
         }
 
         private void btnProduct_Click(object sender, EventArgs e)
         {
+            ucProduct1.UCProduct_Load(sender, e);
             ucProduct1.BringToFront();
             ChooseBtn(btnProduct);
         }

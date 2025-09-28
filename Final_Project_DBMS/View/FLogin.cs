@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Final_Project_DBMS.Controller;
+using Final_Project_DBMS.Utils;
 
 namespace Final_Project_DBMS.View
 {
     public partial class FLogin : Form
     {
         UserController userControl = new UserController();
+        StaffController staffControl = new StaffController();
         public FLogin()
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace Final_Project_DBMS.View
                 }
                 if(role == 1 || role == 2)
                 {
+                    Constants.staffLogin = staffControl.GetStaffByUserName(txtUsername.Text);
                     this.Hide();
                     FManagement fManagement = new FManagement();
                     fManagement.ShowDialog();
