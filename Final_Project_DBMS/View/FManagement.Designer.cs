@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnHome = new Guna.UI2.WinForms.Guna2Button();
             this.btnProduct = new Guna.UI2.WinForms.Guna2Button();
             this.btnWarehouse = new Guna.UI2.WinForms.Guna2Button();
             this.line = new Guna.UI2.WinForms.Guna2Button();
@@ -39,6 +40,8 @@
             this.btnSupplier = new Guna.UI2.WinForms.Guna2Button();
             this.btnInventory = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnStaff = new Guna.UI2.WinForms.Guna2Button();
+            this.ucDashboard1 = new Final_Project_DBMS.View.UCDashboard();
             this.ucInventory1 = new Final_Project_DBMS.View.UCInventory();
             this.ucProduct1 = new Final_Project_DBMS.View.UCProduct();
             this.ucWarehouse1 = new Final_Project_DBMS.View.UCWarehouse();
@@ -46,8 +49,7 @@
             this.ucExpectedGoodsRecieve1 = new Final_Project_DBMS.View.UCExpectedGoodsRecieve();
             this.ucStocking1 = new Final_Project_DBMS.View.UCStocking();
             this.ucHistory1 = new Final_Project_DBMS.View.UCHistory();
-            this.btnHome = new Guna.UI2.WinForms.Guna2Button();
-            this.ucDashboard1 = new Final_Project_DBMS.View.UCDashboard();
+            this.ucStaff1 = new Final_Project_DBMS.View.UCStaff();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +57,7 @@
             // guna2Panel1
             // 
             this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(211)))), ((int)(((byte)(195)))));
+            this.guna2Panel1.Controls.Add(this.btnStaff);
             this.guna2Panel1.Controls.Add(this.btnHome);
             this.guna2Panel1.Controls.Add(this.btnProduct);
             this.guna2Panel1.Controls.Add(this.btnWarehouse);
@@ -70,6 +73,22 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(300, 953);
             this.guna2Panel1.TabIndex = 0;
+            // 
+            // btnHome
+            // 
+            this.btnHome.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnHome.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnHome.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnHome.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnHome.FillColor = System.Drawing.Color.DarkRed;
+            this.btnHome.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.Color.White;
+            this.btnHome.Location = new System.Drawing.Point(0, 284);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(300, 60);
+            this.btnHome.TabIndex = 9;
+            this.btnHome.Text = "Trang chủ";
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // btnProduct
             // 
@@ -142,7 +161,7 @@
             this.btnLogout.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(0, 881);
+            this.btnLogout.Location = new System.Drawing.Point(0, 893);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(300, 60);
             this.btnLogout.TabIndex = 4;
@@ -157,7 +176,7 @@
             this.btnHistory.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnHistory.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHistory.ForeColor = System.Drawing.Color.White;
-            this.btnHistory.Location = new System.Drawing.Point(0, 746);
+            this.btnHistory.Location = new System.Drawing.Point(0, 812);
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Size = new System.Drawing.Size(300, 60);
             this.btnHistory.TabIndex = 3;
@@ -222,11 +241,35 @@
             this.guna2Panel2.Controls.Add(this.ucSupplier1);
             this.guna2Panel2.Controls.Add(this.ucExpectedGoodsRecieve1);
             this.guna2Panel2.Controls.Add(this.ucStocking1);
+            this.guna2Panel2.Controls.Add(this.ucStaff1);
             this.guna2Panel2.Controls.Add(this.ucHistory1);
             this.guna2Panel2.Location = new System.Drawing.Point(300, 0);
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(1700, 1200);
             this.guna2Panel2.TabIndex = 1;
+            // 
+            // btnStaff
+            // 
+            this.btnStaff.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnStaff.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnStaff.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnStaff.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnStaff.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
+            this.btnStaff.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStaff.ForeColor = System.Drawing.Color.White;
+            this.btnStaff.Location = new System.Drawing.Point(0, 746);
+            this.btnStaff.Name = "btnStaff";
+            this.btnStaff.Size = new System.Drawing.Size(300, 60);
+            this.btnStaff.TabIndex = 10;
+            this.btnStaff.Text = "Nhân viên";
+            this.btnStaff.Click += new System.EventHandler(this.btnStaff_Click);
+            // 
+            // ucDashboard1
+            // 
+            this.ucDashboard1.Location = new System.Drawing.Point(0, 0);
+            this.ucDashboard1.Name = "ucDashboard1";
+            this.ucDashboard1.Size = new System.Drawing.Size(1700, 1000);
+            this.ucDashboard1.TabIndex = 8;
             // 
             // ucInventory1
             // 
@@ -301,28 +344,12 @@
             this.ucHistory1.Size = new System.Drawing.Size(1700, 1000);
             this.ucHistory1.TabIndex = 4;
             // 
-            // btnHome
+            // ucStaff1
             // 
-            this.btnHome.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnHome.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnHome.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnHome.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnHome.FillColor = System.Drawing.Color.DarkRed;
-            this.btnHome.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHome.ForeColor = System.Drawing.Color.White;
-            this.btnHome.Location = new System.Drawing.Point(0, 284);
-            this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(300, 60);
-            this.btnHome.TabIndex = 9;
-            this.btnHome.Text = "Trang chủ";
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            // 
-            // ucDashboard1
-            // 
-            this.ucDashboard1.Location = new System.Drawing.Point(0, 0);
-            this.ucDashboard1.Name = "ucDashboard1";
-            this.ucDashboard1.Size = new System.Drawing.Size(1700, 1000);
-            this.ucDashboard1.TabIndex = 8;
+            this.ucStaff1.Location = new System.Drawing.Point(0, 0);
+            this.ucStaff1.Name = "ucStaff1";
+            this.ucStaff1.Size = new System.Drawing.Size(1700, 1000);
+            this.ucStaff1.TabIndex = 9;
             // 
             // FManagement
             // 
@@ -365,6 +392,8 @@
         private View.UCInventory ucInventory1;
         private Guna.UI2.WinForms.Guna2Button btnHome;
         private View.UCDashboard ucDashboard1;
+        private Guna.UI2.WinForms.Guna2Button btnStaff;
+        private View.UCStaff ucStaff1;
     }
 }
 

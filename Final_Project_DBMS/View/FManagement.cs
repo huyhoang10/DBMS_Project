@@ -60,6 +60,7 @@ namespace Final_Project_DBMS
             btnWarehouse.FillColor = Color.FromArgb(107, 98, 89);
             btnProduct.FillColor = Color.FromArgb(107, 98, 89);
             btnHome.FillColor = Color.FromArgb(107, 98, 89);
+            btnStaff.FillColor = Color.FromArgb(107, 98, 89);
             btn.FillColor = Color.DarkRed;
 
         }
@@ -99,6 +100,13 @@ namespace Final_Project_DBMS
             ucDashboard1.UCDashboard_Load(sender, e);
             ucDashboard1.BringToFront();
             ChooseBtn(btnHome);
+        }
+
+        private void btnStaff_Click(object sender, EventArgs e)
+        {
+            ucStaff1.UCStaff_Load(sender, e);
+            ucStaff1.BringToFront();
+            ChooseBtn(btnStaff);
         }
     }
 }

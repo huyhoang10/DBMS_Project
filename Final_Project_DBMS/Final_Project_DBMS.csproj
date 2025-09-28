@@ -76,6 +76,7 @@
     <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\Staff.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Warehouse.cs" />
@@ -130,6 +131,12 @@
     </Compile>
     <Compile Include="View\UCProduct.Designer.cs">
       <DependentUpon>UCProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\UCStaff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\UCStaff.Designer.cs">
+      <DependentUpon>UCStaff.cs</DependentUpon>
     </Compile>
     <Compile Include="View\UCStocking.cs">
       <SubType>UserControl</SubType>
@@ -187,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\UCProduct.resx">
       <DependentUpon>UCProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UCStaff.resx">
+      <DependentUpon>UCStaff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\UCStocking.resx">
       <DependentUpon>UCStocking.cs</DependentUpon>
