@@ -23,6 +23,9 @@ GRANT SELECT ON OBJECT::dbo.fn_ChitietDonHang TO role_NvKho;
 -- Cho phép role_NvKho SELECT từ function fn_LayDonHangTheoMa
 GRANT SELECT ON OBJECT::dbo.fn_LayDonHangTheoMa TO role_NvKho;
 
+GRANT SELECT ON OBJECT::dbo.v_SanPham_Chitiet TO role_NvKho;
+GRANT SELECT ON OBJECT::dbo.v_NhaCungCap TO role_NvKho;
+GRANT SELECT ON OBJECT::dbo.v_Kho TO role_NvKho;
 SELECT 
     dp.name AS RoleName,
     dp.type_desc AS RoleType,
