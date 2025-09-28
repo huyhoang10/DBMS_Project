@@ -9,6 +9,7 @@ namespace Final_Project_DBMS.Dao
 {
     internal class DBConnect
     {
-        public static string connectionString = @"Data Source=.;Initial Catalog=NhapHang;Integrated Security=True";
+        public static string connectionString;//= @"Data Source=.;Initial Catalog=NhapHang;User Id=nvkho_01;Password=12345";
+
     }
 }

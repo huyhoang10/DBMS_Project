@@ -319,7 +319,14 @@ namespace Final_Project_DBMS.View
             txtStaff.Enabled = false;
             txtIdOrderPending.Enabled = false;
             txtDescription.Enabled = false;
-            txtStaff.Text = Constants.staffLogin.IdStaff.ToString();
+            if (Constants.staffLogin != null && Constants.staffLogin.IdStaff != null)
+            {
+                txtStaff.Text = Constants.staffLogin.IdStaff.ToString();
+            }
+            else
+            {
+                txtStaff.Text = string.Empty; // hoặc gán giá trị mặc định
+            }
 
         }
 

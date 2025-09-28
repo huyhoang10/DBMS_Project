@@ -1,6 +1,9 @@
 ﻿use QLNhapHang
 go
 
+-- Gán quyền SELECT (dùng cho inline table-valued function)
+
+
 /*
 DROP ROLE	role_QuanLy;
 CREATE ROLE	role_QuanLy;
@@ -9,6 +12,16 @@ GRANT CONTROL ON DATABASE::QLNhapHang TO role_QuanLy;
 DROP ROLE role_NvKho;
 CREATE ROLE role_NvKho;
 GRANT  EXEC ON dbo.prc_ThemDonHangThucTe TO role_NvKho;
+GRANT SELECT ON OBJECT::dbo.fn_TimNhanVienTheoTenTaiKhoan TO role_NvKho;
+GRANT EXECUTE ON OBJECT::dbo.fn_CheckRoleId TO role_NvKho;
+-- Cho phép role_NvKho SELECT từ view v_DonHangCanXuLy
+GRANT SELECT ON OBJECT::dbo.v_DonHangCanXuLy TO role_NvKho;
+
+-- Cho phép role_NvKho SELECT từ function fn_ChitietDonHang
+GRANT SELECT ON OBJECT::dbo.fn_ChitietDonHang TO role_NvKho;
+
+-- Cho phép role_NvKho SELECT từ function fn_LayDonHangTheoMa
+GRANT SELECT ON OBJECT::dbo.fn_LayDonHangTheoMa TO role_NvKho;
 
 SELECT 
     dp.name AS RoleName,

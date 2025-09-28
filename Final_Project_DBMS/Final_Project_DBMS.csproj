@@ -110,6 +110,12 @@
     <Compile Include="View\FProduct.Designer.cs">
       <DependentUpon>FProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FStaff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FStaff.Designer.cs">
+      <DependentUpon>FStaff.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\UCDashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </Compile>
     <EmbeddedResource Include="View\FProduct.resx">
       <DependentUpon>FProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FStaff.resx">
+      <DependentUpon>FStaff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\UCDashboard.resx">
       <DependentUpon>UCDashboard.cs</DependentUpon>
