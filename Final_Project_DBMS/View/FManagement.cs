@@ -46,7 +46,7 @@ namespace Final_Project_DBMS
 
         private void FManagement_Load(object sender, EventArgs e)
         {
-            ChooseBtn(btnInventory);
+            btnHome_Click(sender, e);
         }
 
 
@@ -59,6 +59,7 @@ namespace Final_Project_DBMS
             btnHistory.FillColor = Color.FromArgb(107, 98, 89);
             btnWarehouse.FillColor = Color.FromArgb(107, 98, 89);
             btnProduct.FillColor = Color.FromArgb(107, 98, 89);
+            btnHome.FillColor = Color.FromArgb(107, 98, 89);
             btn.FillColor = Color.DarkRed;
 
         }
@@ -91,6 +92,13 @@ namespace Final_Project_DBMS
         private void ucInventory1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            ucDashboard1.UCDashboard_Load(sender, e);
+            ucDashboard1.BringToFront();
+            ChooseBtn(btnHome);
         }
     }
 }

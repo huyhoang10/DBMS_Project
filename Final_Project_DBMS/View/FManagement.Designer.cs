@@ -46,6 +46,8 @@
             this.ucExpectedGoodsRecieve1 = new Final_Project_DBMS.View.UCExpectedGoodsRecieve();
             this.ucStocking1 = new Final_Project_DBMS.View.UCStocking();
             this.ucHistory1 = new Final_Project_DBMS.View.UCHistory();
+            this.btnHome = new Guna.UI2.WinForms.Guna2Button();
+            this.ucDashboard1 = new Final_Project_DBMS.View.UCDashboard();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +55,7 @@
             // guna2Panel1
             // 
             this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(211)))), ((int)(((byte)(195)))));
+            this.guna2Panel1.Controls.Add(this.btnHome);
             this.guna2Panel1.Controls.Add(this.btnProduct);
             this.guna2Panel1.Controls.Add(this.btnWarehouse);
             this.guna2Panel1.Controls.Add(this.line);
@@ -77,7 +80,7 @@
             this.btnProduct.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnProduct.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProduct.ForeColor = System.Drawing.Color.White;
-            this.btnProduct.Location = new System.Drawing.Point(0, 366);
+            this.btnProduct.Location = new System.Drawing.Point(0, 416);
             this.btnProduct.Name = "btnProduct";
             this.btnProduct.Size = new System.Drawing.Size(300, 60);
             this.btnProduct.TabIndex = 8;
@@ -93,7 +96,7 @@
             this.btnWarehouse.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnWarehouse.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnWarehouse.ForeColor = System.Drawing.Color.White;
-            this.btnWarehouse.Location = new System.Drawing.Point(0, 432);
+            this.btnWarehouse.Location = new System.Drawing.Point(0, 482);
             this.btnWarehouse.Name = "btnWarehouse";
             this.btnWarehouse.Size = new System.Drawing.Size(300, 60);
             this.btnWarehouse.TabIndex = 7;
@@ -123,7 +126,7 @@
             this.btnExpectOrder.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnExpectOrder.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExpectOrder.ForeColor = System.Drawing.Color.White;
-            this.btnExpectOrder.Location = new System.Drawing.Point(0, 564);
+            this.btnExpectOrder.Location = new System.Drawing.Point(0, 614);
             this.btnExpectOrder.Name = "btnExpectOrder";
             this.btnExpectOrder.Size = new System.Drawing.Size(300, 60);
             this.btnExpectOrder.TabIndex = 5;
@@ -154,7 +157,7 @@
             this.btnHistory.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnHistory.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHistory.ForeColor = System.Drawing.Color.White;
-            this.btnHistory.Location = new System.Drawing.Point(0, 696);
+            this.btnHistory.Location = new System.Drawing.Point(0, 746);
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Size = new System.Drawing.Size(300, 60);
             this.btnHistory.TabIndex = 3;
@@ -170,7 +173,7 @@
             this.btnStocking.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnStocking.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStocking.ForeColor = System.Drawing.Color.White;
-            this.btnStocking.Location = new System.Drawing.Point(0, 630);
+            this.btnStocking.Location = new System.Drawing.Point(0, 680);
             this.btnStocking.Name = "btnStocking";
             this.btnStocking.Size = new System.Drawing.Size(300, 60);
             this.btnStocking.TabIndex = 2;
@@ -186,7 +189,7 @@
             this.btnSupplier.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(98)))), ((int)(((byte)(89)))));
             this.btnSupplier.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSupplier.ForeColor = System.Drawing.Color.White;
-            this.btnSupplier.Location = new System.Drawing.Point(0, 498);
+            this.btnSupplier.Location = new System.Drawing.Point(0, 548);
             this.btnSupplier.Name = "btnSupplier";
             this.btnSupplier.Size = new System.Drawing.Size(300, 60);
             this.btnSupplier.TabIndex = 1;
@@ -202,7 +205,7 @@
             this.btnInventory.FillColor = System.Drawing.Color.DarkRed;
             this.btnInventory.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInventory.ForeColor = System.Drawing.Color.White;
-            this.btnInventory.Location = new System.Drawing.Point(0, 300);
+            this.btnInventory.Location = new System.Drawing.Point(0, 350);
             this.btnInventory.Name = "btnInventory";
             this.btnInventory.Size = new System.Drawing.Size(300, 60);
             this.btnInventory.TabIndex = 0;
@@ -212,6 +215,7 @@
             // guna2Panel2
             // 
             this.guna2Panel2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.guna2Panel2.Controls.Add(this.ucDashboard1);
             this.guna2Panel2.Controls.Add(this.ucInventory1);
             this.guna2Panel2.Controls.Add(this.ucProduct1);
             this.guna2Panel2.Controls.Add(this.ucWarehouse1);
@@ -297,6 +301,29 @@
             this.ucHistory1.Size = new System.Drawing.Size(1700, 1000);
             this.ucHistory1.TabIndex = 4;
             // 
+            // btnHome
+            // 
+            this.btnHome.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnHome.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnHome.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnHome.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnHome.FillColor = System.Drawing.Color.DarkRed;
+            this.btnHome.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.Color.White;
+            this.btnHome.Location = new System.Drawing.Point(0, 284);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(300, 60);
+            this.btnHome.TabIndex = 9;
+            this.btnHome.Text = "Trang chủ";
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // ucDashboard1
+            // 
+            this.ucDashboard1.Location = new System.Drawing.Point(0, 0);
+            this.ucDashboard1.Name = "ucDashboard1";
+            this.ucDashboard1.Size = new System.Drawing.Size(1700, 1000);
+            this.ucDashboard1.TabIndex = 8;
+            // 
             // FManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -336,6 +363,8 @@
         private View.UCProduct ucProduct1;
         private View.UCWarehouse ucWarehouse1;
         private View.UCInventory ucInventory1;
+        private Guna.UI2.WinForms.Guna2Button btnHome;
+        private View.UCDashboard ucDashboard1;
     }
 }
 

@@ -835,7 +835,21 @@ as
 go
 
 select * from fn_TienNhapHangCacThangTheoNam(2025);
-------------Function Thống Kê -----------------
+
+go
+
+DROP FUNCTION fn_LayNamNhapHang
+create function fn_LayNamNhapHang()
+returns table
+as
+	return (select YEAR(ngaylap)as Nam 
+	from DonHang 
+	where ma_loai = 2
+	group by YEAR(ngaylap));
+go
+
+select * from fn_LayNamNhapHang()
+------------Thống Kê -----------------
 -- Số tiền nhập hang của từng tháng, từng năm
 GO
 drop view v_TongTienNhapTheoThang
