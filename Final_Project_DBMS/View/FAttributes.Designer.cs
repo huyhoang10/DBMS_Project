@@ -34,6 +34,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FAttributes));
             this.dgvAttribute = new Guna.UI2.WinForms.Guna2DataGridView();
+            this.col_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnReset = new Guna.UI2.WinForms.Guna2Button();
             this.btnDelete = new Guna.UI2.WinForms.Guna2Button();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
@@ -41,8 +43,6 @@
             this.cmbAttribute = new Guna.UI2.WinForms.Guna2ComboBox();
             this.txtName = new Guna.UI2.WinForms.Guna2TextBox();
             this.txtId = new Guna.UI2.WinForms.Guna2TextBox();
-            this.col_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -109,6 +109,22 @@
             this.dgvAttribute.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvAttribute.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvAttribute.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAttribute_CellClick);
+            // 
+            // col_id
+            // 
+            this.col_id.DataPropertyName = "Id";
+            this.col_id.HeaderText = "Mã ";
+            this.col_id.MinimumWidth = 6;
+            this.col_id.Name = "col_id";
+            this.col_id.ReadOnly = true;
+            // 
+            // col_name
+            // 
+            this.col_name.DataPropertyName = "Name";
+            this.col_name.HeaderText = "Tên";
+            this.col_name.MinimumWidth = 6;
+            this.col_name.Name = "col_name";
+            this.col_name.ReadOnly = true;
             // 
             // btnReset
             // 
@@ -243,29 +259,14 @@
             this.txtId.Size = new System.Drawing.Size(323, 58);
             this.txtId.TabIndex = 25;
             // 
-            // col_id
-            // 
-            this.col_id.DataPropertyName = "Id";
-            this.col_id.HeaderText = "Mã ";
-            this.col_id.MinimumWidth = 6;
-            this.col_id.Name = "col_id";
-            this.col_id.ReadOnly = true;
-            // 
-            // col_name
-            // 
-            this.col_name.DataPropertyName = "Name";
-            this.col_name.HeaderText = "Tên";
-            this.col_name.MinimumWidth = 6;
-            this.col_name.Name = "col_name";
-            this.col_name.ReadOnly = true;
-            // 
             // guna2HtmlLabel1
             // 
+            this.guna2HtmlLabel1.AutoSize = false;
             this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2HtmlLabel1.Location = new System.Drawing.Point(406, 27);
             this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(220, 61);
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(399, 61);
             this.guna2HtmlLabel1.TabIndex = 28;
             this.guna2HtmlLabel1.Text = "Thuộc Tính";
             // 
@@ -310,7 +311,6 @@
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

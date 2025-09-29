@@ -1,11 +1,13 @@
 ﻿using Final_Project_DBMS.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Security;
+using System.Windows.Forms;
 
 namespace Final_Project_DBMS.Dao
 {
@@ -43,11 +45,12 @@ namespace Final_Project_DBMS.Dao
             {
                 conn.Open();
                 if (staff.IdRole == 2)
-                {
+                {   
                     try
                     {
-                        SqlCommand cmd = new SqlCommand("Exec prc_ThemNhanVienVaTaiKhoan_NvKho @HoTen,@CCCD," +
-                            "@GioiTinh,@NgaySinh,@Tuoi,@TenDangNhap,@MatKhau,@RoleId", conn);
+                        SqlCommand cmd = new SqlCommand("dbo.prc_ThemNhanVienVaTaiKhoan_NvKho", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
                         cmd.Parameters.AddWithValue("@HoTen", staff.NameStaff);
                         cmd.Parameters.AddWithValue("@CCCD", staff.Cccd);
                         cmd.Parameters.AddWithValue("@GioiTinh", staff.Sex);
@@ -86,6 +89,7 @@ namespace Final_Project_DBMS.Dao
                         throw new Exception("Error adding staff and account: " + ex.Message);
                     }
                 }
+                
             }
 
 

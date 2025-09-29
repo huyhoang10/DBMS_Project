@@ -84,6 +84,7 @@ namespace Final_Project_DBMS.View
                 txtAddress.Enabled = true;
                 btnDelete.Enabled = true;
                 btnSave.Enabled = true;
+                btnAdd.Enabled = false;
             }
         }
 

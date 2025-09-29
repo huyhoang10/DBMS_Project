@@ -30,6 +30,7 @@ namespace Final_Project_DBMS.View
             btnReset_Click(sender, e);
             txtIdStaff.Enabled = false;
             txtIdUser.Enabled = false;
+            
         }
 
         private void LoadDgv() { 
@@ -40,7 +41,7 @@ namespace Final_Project_DBMS.View
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (txtName.Text == "" || txtCccd.Text == "" || txtUserName.Text == "" 
-                || txtPassword.Text == "" || cmbSex.SelectedItem == null || cmbRoleId.SelectedItem == null)
+                || txtPassword.Text == "" || cmbSex.SelectedItem == null)
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin");
                 return;
@@ -56,7 +57,14 @@ namespace Final_Project_DBMS.View
                     staff.Sex = cmbSex.SelectedItem.ToString();
                     staff.UserName = txtUserName.Text;
                     staff.Password = txtPassword.Text;
-                    staff.IdRole = int.Parse(cmbRoleId.SelectedItem.ToString());
+                    //staff.IdRole = Int32.Parse(cmbRoleId.SelectedItem.ToString());
+                    if(!rdbManager.Checked && !rdbStaff.Checked)
+                    {
+                        MessageBox.Show("Vui lòng chọn vai trò");
+                        return;
+                    }
+                    if (rdbManager.Checked) staff.IdRole = 1;
+                    if (rdbStaff.Checked) staff.IdRole = 2;
                     staffController.AddStaff(staff);
                     MessageBox.Show("Thêm nhân viên thành công");
                     btnReset_Click(sender, e);
@@ -76,15 +84,15 @@ namespace Final_Project_DBMS.View
             txtCccd.Text = "";
             txtPassword.Text = "";
             txtUserName.Text = "";
-            
+
             //txtCccd.Enabled = false;
             //txtName.Enabled = false;
             //txtUserName.Enabled = false;
             //txtPassword.Enabled = false;
             //cmbRoleId.Enabled = false;
             //cmbSex.Enabled = false;
-            cmbRoleId.SelectedItem = null;
-            cmbSex.SelectedItem = null;
+            
+            cmbSex.SelectedIndex = 0;
             dtpBirthday.Value = DateTime.Now;
             txtName.Text = "";
             LoadDgv();

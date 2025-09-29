@@ -28,7 +28,5 @@ namespace Final_Project_DBMS.Model
         public string Password { get => password; set => password = value; }
         public int IdRole { get => idRole; set => idRole = value; }
 
-
-
     }
 }

@@ -346,6 +346,11 @@ namespace Final_Project_DBMS.View
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+            if (dgvDetailOder.Rows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng thêm sản phẩm vào đơn hàng", "Thông báo");
+                return;
+            }
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             foreach (DataGridViewRow row in dgvDetailOder.Rows)
             {
@@ -369,6 +374,7 @@ namespace Final_Project_DBMS.View
             order.Supplier = cmbSupplier.SelectedValue.ToString();
             int idOrderPending = Int32.Parse(txtIdOrderPending.Text.ToString());
             orderController.InsertOrderActual(idOrderPending,orderDetails, order);
+            MessageBox.Show("Nhập hàng thành công", "Thông báo");
             LoadDgvOrderExpect();
             btnReset_Click(sender, e);
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,21 @@ namespace Final_Project_DBMS.View
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi đăng nhập");
             }
             else {
-                DBConnect.connectionString = "Data Source=.;Initial Catalog=NhapHang;User Id=" + txtUsername.Text + ";Password=" + txtPassword.Text;
+                string connStr = $"Data Source=.;Initial Catalog=NhapHang;User Id={txtUsername.Text};Password={txtPassword.Text}";
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connStr))
+                    {
+                        conn.Open();
+                        DBConnect.connectionString = connStr;
+                        conn.Close();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Lỗi đăng nhập");
+                    return;
+                }
                 UserController userControl = new UserController();
                 StaffController staffControl = new StaffController();
                 int role = userControl.Login(txtUsername.Text, txtPassword.Text);
@@ -46,17 +61,18 @@ namespace Final_Project_DBMS.View
                 {
                     Constants.staffLogin = staffControl.GetStaffByUserName(txtUsername.Text);
                     this.Hide();
-                    FManagement fManagement = new FManagement();
-                    fManagement.ShowDialog();
-                    this.Close();
+                    new FManagement().ShowDialog();
+                    this.Show();
+                    txtPassword.Text = "";
+                    txtUsername.Text = "";
                 }
                 if(role == 2)
                 {
-                    Constants.staffLogin = staffControl.GetStaffByUserName(txtUsername.Text);
                     this.Hide();
-                    FStaff fStaff = new FStaff();
-                    fStaff.ShowDialog();
-                    this.Close();
+                    new FStaff().ShowDialog();
+                    this.Show();
+                    txtPassword.Text = "";
+                    txtUsername.Text = "";
                 }
             }
             

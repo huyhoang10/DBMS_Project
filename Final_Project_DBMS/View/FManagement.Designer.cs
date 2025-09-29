@@ -166,6 +166,7 @@
             this.btnLogout.Size = new System.Drawing.Size(300, 60);
             this.btnLogout.TabIndex = 4;
             this.btnLogout.Text = "Đăng xuất";
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnHistory
             // 

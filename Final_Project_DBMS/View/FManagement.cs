@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Final_Project_DBMS.View;
 
 namespace Final_Project_DBMS
 {
@@ -114,6 +115,12 @@ namespace Final_Project_DBMS
             ucStaff1.UCStaff_Load(sender, e);
             ucStaff1.BringToFront();
             ChooseBtn(btnStaff);
+            
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

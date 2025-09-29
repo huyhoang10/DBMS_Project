@@ -96,11 +96,12 @@
             // 
             // guna2HtmlLabel1
             // 
+            this.guna2HtmlLabel1.AutoSize = false;
             this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI Semibold", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2HtmlLabel1.Location = new System.Drawing.Point(160, 54);
             this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(217, 61);
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(292, 61);
             this.guna2HtmlLabel1.TabIndex = 27;
             this.guna2HtmlLabel1.Text = "Đăng nhập";
             // 
@@ -119,7 +120,6 @@
             this.Text = "Đăng nhập";
             this.Load += new System.EventHandler(this.FLogin_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
