@@ -108,5 +108,10 @@ namespace Final_Project_DBMS.View
             int year = (int)cmbYear.SelectedItem;
             LoadChart(dashboardController.GetMoneyEachMonthByYear(year));
         }
+
+        private void grbTotalMoney_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -154,5 +154,10 @@ namespace Final_Project_DBMS.View
                 }
             }
         }
+
+        private void guna2HtmlLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace Final_Project_DBMS.View
 
         private void FAttributes_Load(object sender, EventArgs e)
         {
+            dgvAttribute.ReadOnly = true;
             txtId.Enabled = false;
             txtName.Enabled = false;
             btnDelete.Enabled = false;
@@ -151,6 +152,11 @@ namespace Final_Project_DBMS.View
                 MessageBox.Show("Lỗi: " + ex.Message);
                 return;
             }
+        }
+
+        private void guna2Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

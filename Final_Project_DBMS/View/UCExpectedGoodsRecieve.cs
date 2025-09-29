@@ -47,7 +47,7 @@ namespace Final_Project_DBMS.View
 
             txtIdStaff.Enabled = false;
             txtIdOder.Enabled = false;
-            txtTotal.Enabled = false;
+            txtTotal.ReadOnly = true;
             btnSave.Enabled = false;
 
             DataGridViewColumn col_index = dgvDetailOder.Columns[0];
@@ -453,5 +453,9 @@ namespace Final_Project_DBMS.View
             }
         }
 
+        private void guna2HtmlLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
