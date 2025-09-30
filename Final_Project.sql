@@ -1,4 +1,4 @@
-﻿use QLNhapHang
+﻿use NhapHang
 go
 
 -- Gán quyền SELECT (dùng cho inline table-valued function)
@@ -6,7 +6,7 @@ go
 
 /*
 CREATE ROLE	role_QuanLy;
-GRANT CONTROL ON DATABASE::QLNhapHang TO role_QuanLy;
+GRANT CONTROL ON DATABASE::NhapHang TO role_QuanLy;
 CREATE ROLE role_NvKho;
 GRANT  EXEC ON dbo.prc_ThemDonHangThucTe TO role_NvKho;
 */
@@ -870,6 +870,8 @@ BEGIN
 END
 GO
 
+
+
 CREATE PROCEDURE prc_ThemNhanVienVaTaiKhoan_NvKho
     @HoTen NVARCHAR(100),
     @CCCD VARCHAR(12),
@@ -919,7 +921,8 @@ BEGIN
     END TRY
     BEGIN CATCH
         ROLLBACK TRANSACTION;
-        PRINT N'Lỗi: ' + ERROR_MESSAGE();
+		-- Re-raise lỗi để client nhận được
+		THROW;
     END CATCH
 END
 GO
@@ -973,7 +976,7 @@ BEGIN
     END TRY
     BEGIN CATCH
         ROLLBACK TRANSACTION;
-        PRINT N'Lỗi: ' + ERROR_MESSAGE();
+        THROW;
     END CATCH
 END
 GO
@@ -1440,4 +1443,33 @@ BEGIN
 END
 GO
 
+CREATE TRIGGER trg_InsertNhanVien
+ON NhanVien
+INSTEAD OF INSERT
+AS
+BEGIN
+    -- Tính tuổi từ ngày sinh
+    DECLARE @Tuoi INT;
+
+    -- Kiểm tra nếu có bản ghi nào tuổi <= 0
+    IF EXISTS (
+        SELECT 1
+        FROM inserted
+        WHERE DATEDIFF(YEAR, NgaySinh, GETDATE()) <= 0
+    )
+    BEGIN
+        RAISERROR('Ngày sinh không hợp lệ: tuổi phải lớn hơn 0.', 16, 1);
+        RETURN;
+    END
+
+    -- Thực hiện insert với tuổi được tính tự động
+    INSERT INTO NhanVien(hoten, cccd, gioitinh, ngaysinh, tuoi)
+    SELECT hoten,
+           cccd,
+           gioitinh,
+           ngaysinh,
+           DATEDIFF(YEAR, ngaysinh, GETDATE()) -- Tính tuổi
+    FROM inserted;
+END;
+GO
 

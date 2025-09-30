@@ -43,7 +43,6 @@ namespace Final_Project_DBMS.View
                     {
                         conn.Open();
                         DBConnect.connectionString = connStr;
-                        conn.Close();
                     }
                 }
                 catch
@@ -59,6 +58,7 @@ namespace Final_Project_DBMS.View
                 }
                 if(role == 1)
                 {
+                    DBConnect.connectionString = "Data Source=.;Initial Catalog=NhapHang;User Id=sa;Password=hoang1808";
                     Constants.staffLogin = staffControl.GetStaffByUserName(txtUsername.Text);
                     this.Hide();
                     new FManagement().ShowDialog();
@@ -68,6 +68,7 @@ namespace Final_Project_DBMS.View
                 }
                 if(role == 2)
                 {
+                    Constants.staffLogin = staffControl.GetStaffByUserName(txtUsername.Text);
                     this.Hide();
                     new FStaff().ShowDialog();
                     this.Show();

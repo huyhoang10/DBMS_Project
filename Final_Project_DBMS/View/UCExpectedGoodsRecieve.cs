@@ -43,7 +43,7 @@ namespace Final_Project_DBMS.View
 
             btnReset_Click(sender, e);
 
-            txtIdStaff.Text = Constants.staffLogin.IdStaff.ToString();
+            //txtIdStaff.Text = Constants.staffLogin.IdStaff.ToString();
 
             txtIdStaff.Enabled = false;
             txtIdOder.Enabled = false;
